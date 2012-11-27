@@ -8,16 +8,35 @@
 
 #import "GameboardView.h"
 
+#import "UIColor+Gammon.h"
+
 @implementation GameboardView
+
+
+- (void)setup
+{
+  UIImage *patternImage = [UIImage imageNamed:@"wood_pattern"];
+  self.backgroundColor = [UIColor colorWithPatternImage:patternImage];
+}
 
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self setup];
+  }
+  return self;
+}
+
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self setup];
+  }
+  return self;
 }
 
 
@@ -25,19 +44,12 @@
 {
   CGContextRef context = UIGraphicsGetCurrentContext();
   
-  CGColorRef background =
-  [UIColor colorWithRed:0.000 green:0.502 blue:0.251 alpha:1.000].CGColor;
-  
-  CGContextSetFillColorWithColor(context, background);
-  CGContextFillRect(context, self.bounds);
-
   int pipsPerRow = 12;
   CGFloat width = (int)self.bounds.size.width/pipsPerRow;
   CGFloat height = 120;
   CGColorRef pipColors[] = {
-    [UIColor colorWithRed:208.0/255.0 green:208.0/255.0
-                     blue:208.0/255.0 alpha:1.0].CGColor,
-    [UIColor colorWithRed:0.600 green:0.400 blue:0.200 alpha:1.000].CGColor
+    [UIColor pipColor1].CGColor,
+    [UIColor pipColor2].CGColor
   };
   for (int i = 0; i < pipsPerRow; ++i) {
     drawPip(context, CGRectMake(i*width, 0, width, height), pipColors[i % 2], NO);
