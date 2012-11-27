@@ -8,7 +8,13 @@
 
 #import "ViewController.h"
 
+#import "Game.h"
+#import "GameboardView.h"
+
+
 @interface ViewController ()
+
+@property (nonatomic) Game *game;
 
 @end
 
@@ -16,7 +22,11 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];  
+  [super viewDidLoad];
+  
+  self.game = [[Game alloc] init];
+  GameboardView *v = (GameboardView *)self.view;
+  v.game = self.game;
 }
 
 - (void)didReceiveMemoryWarning

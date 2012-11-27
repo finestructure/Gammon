@@ -8,7 +8,10 @@
 
 #import "GameboardView.h"
 
+#import "Game.h"
+#import "Slot.h"
 #import "UIColor+Gammon.h"
+
 
 @implementation GameboardView
 
@@ -63,6 +66,14 @@
     CGFloat offset = i < pipsPerSection ? 0 : barWidth;
     drawPip(context, CGRectMake(i*width + offset, 0, width, height), pipColors[i % 2], NO);
     drawPip(context, CGRectMake(i*width + offset, self.bounds.size.height - height, width, height), pipColors[(i+1) % 2], YES);
+  }
+  
+  if (self.game) {
+    for (Slot *s in self.game.slots) {
+      if (s.count > 0) {
+        NSLog(@"%d %d %d", [self.game.slots indexOfObject:s], s.color, s.count);
+      }
+    }
   }
 }
 

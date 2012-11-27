@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Game;
+
 @interface GameboardView : UIView
+
+@property (nonatomic) Game *game;
 
 @end

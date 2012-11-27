@@ -9,6 +9,10 @@
 #import "Game.h"
 #import "Slot.h"
 
+
+const NSUInteger kSlotCount = 24;
+
+
 @implementation Game
 
 
@@ -27,7 +31,7 @@
   // We keep 24 slots and the bar in a single array describing the layout of the complete board.
   // Slot 0 contains checkers on the bar.
   NSMutableArray *slots = [NSMutableArray arrayWithCapacity:kSlotCount+1];
-  for (NSUInteger i = 0; i < kSlotCount; ++i) {
+  for (NSUInteger i = 0; i < kSlotCount+1; ++i) {
     [slots addObject:[[Slot alloc] init]];
   }
   

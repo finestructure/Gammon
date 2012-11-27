@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-const NSUInteger kSlotCount = 24;
 
 @interface Game : NSObject
 
