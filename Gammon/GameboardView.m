@@ -12,6 +12,8 @@
 #import "Slot.h"
 #import "UIColor+Gammon.h"
 
+const CGFloat kCheckerRadius = 28;
+
 
 @implementation GameboardView
 
@@ -71,14 +73,48 @@
   if (self.game) {
     for (Slot *s in self.game.slots) {
       if (s.count > 0) {
-        NSLog(@"%d %d %d", [self.game.slots indexOfObject:s], s.color, s.count);
+        NSUInteger index = [self.game.slots indexOfObject:s];
+        UIColor *color = s.color == White ? [UIColor whiteColor] : [UIColor blackColor];
+        CGFloat xOffset;
+        NSUInteger x;
+        BOOL down;
+        if (index <= 6) {
+          xOffset = 0;
+          x = index -1;
+          down = YES;
+        } else if (index <= 12) {
+          xOffset = barWidth;
+          x = index -1;
+          down = YES;
+        } else if (index <= 18) {
+          xOffset = barWidth;
+          x = 4*pipsPerSection - index;
+          down = NO;
+        } else {
+          xOffset = 0;
+          x = 4*pipsPerSection - index;
+          down = NO;
+        }
+        for (int y = 0; y < s.count; ++y) {
+          CGFloat yPos = down ? y*kCheckerRadius : self.bounds.size.height - (y +1)*kCheckerRadius;
+          CGRect rect = CGRectMake(x*width + xOffset + (width-kCheckerRadius)/2, yPos, kCheckerRadius, kCheckerRadius);
+          drawChecker(context, rect, color.CGColor);
+        }
       }
     }
   }
 }
 
 
-void drawPip(CGContextRef ctx, CGRect rect, CGColorRef color, BOOL up) {
+void drawChecker(CGContextRef ctx, CGRect rect, CGColorRef color)
+{
+  CGContextSetFillColorWithColor(ctx, color);
+  CGContextFillEllipseInRect(ctx, rect);
+}
+
+
+void drawPip(CGContextRef ctx, CGRect rect, CGColorRef color, BOOL up)
+{
   CGContextBeginPath(ctx);
   if (up) {
     CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect));
