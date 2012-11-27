@@ -23,6 +23,7 @@
 		5AB3E6B6166522280057473D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AB3E691166522280057473D /* Foundation.framework */; };
 		5AB3E6BE166522280057473D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AB3E6BC166522280057473D /* InfoPlist.strings */; };
 		5AB3E6C1166522280057473D /* GammonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB3E6C0166522280057473D /* GammonTests.m */; };
+		5AB3E6CC166531540057473D /* GameboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB3E6CB166531540057473D /* GameboardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		5AB3E6BD166522280057473D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5AB3E6BF166522280057473D /* GammonTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GammonTests.h; sourceTree = "<group>"; };
 		5AB3E6C0166522280057473D /* GammonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GammonTests.m; sourceTree = "<group>"; };
+		5AB3E6CA166531540057473D /* GameboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameboardView.h; sourceTree = "<group>"; };
+		5AB3E6CB166531540057473D /* GameboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameboardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +123,8 @@
 				5AB3E69E166522280057473D /* AppDelegate.h */,
 				5AB3E69F166522280057473D /* AppDelegate.m */,
 				5AB3E6A7166522280057473D /* MainStoryboard.storyboard */,
+				5AB3E6CA166531540057473D /* GameboardView.h */,
+				5AB3E6CB166531540057473D /* GameboardView.m */,
 				5AB3E6AA166522280057473D /* ViewController.h */,
 				5AB3E6AB166522280057473D /* ViewController.m */,
 				5AB3E696166522280057473D /* Supporting Files */,
@@ -273,6 +278,7 @@
 				5AB3E69C166522280057473D /* main.m in Sources */,
 				5AB3E6A0166522280057473D /* AppDelegate.m in Sources */,
 				5AB3E6AC166522280057473D /* ViewController.m in Sources */,
+				5AB3E6CC166531540057473D /* GameboardView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
