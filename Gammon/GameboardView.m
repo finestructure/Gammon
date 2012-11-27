@@ -44,16 +44,19 @@
 {
   CGContextRef context = UIGraphicsGetCurrentContext();
   
-  int pipsPerRow = 12;
-  CGFloat width = (int)self.bounds.size.width/pipsPerRow;
+  int pipsPerSection = 6;
+  CGFloat barWidth = 30;
+  CGFloat width = (self.bounds.size.width - barWidth)/2/pipsPerSection;
   CGFloat height = 120;
   CGColorRef pipColors[] = {
     [UIColor pipColor1].CGColor,
     [UIColor pipColor2].CGColor
   };
-  for (int i = 0; i < pipsPerRow; ++i) {
-    drawPip(context, CGRectMake(i*width, 0, width, height), pipColors[i % 2], NO);
-    drawPip(context, CGRectMake(i*width, self.bounds.size.height - height, width, height), pipColors[(i+1) % 2], YES);
+
+  for (int i = 0; i < 2*pipsPerSection; ++i) {
+    CGFloat offset = i < pipsPerSection ? 0 : barWidth;
+    drawPip(context, CGRectMake(i*width + offset, 0, width, height), pipColors[i % 2], NO);
+    drawPip(context, CGRectMake(i*width + offset, self.bounds.size.height - height, width, height), pipColors[(i+1) % 2], YES);
   }
 }
 
