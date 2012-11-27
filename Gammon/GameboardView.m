@@ -41,9 +41,15 @@
 
 
 - (void)drawRect:(CGRect)rect
+{  
+  [self drawBoard];
+}
+
+
+- (void)drawBoard
 {
   CGContextRef context = UIGraphicsGetCurrentContext();
-  
+
   int pipsPerSection = 6;
   CGFloat barWidth = 30;
   CGFloat width = (self.bounds.size.width - barWidth)/2/pipsPerSection;
@@ -58,19 +64,6 @@
     drawPip(context, CGRectMake(i*width + offset, 0, width, height), pipColors[i % 2], NO);
     drawPip(context, CGRectMake(i*width + offset, self.bounds.size.height - height, width, height), pipColors[(i+1) % 2], YES);
   }
-}
-
-
-void draw1PxStroke(CGContextRef context, CGPoint startPoint, CGPoint endPoint,
-                   CGColorRef color) {
-  CGContextSaveGState(context);
-  CGContextSetLineCap(context, kCGLineCapSquare);
-  CGContextSetStrokeColorWithColor(context, color);
-  CGContextSetLineWidth(context, 1.0);
-  CGContextMoveToPoint(context, startPoint.x + 0.5, startPoint.y + 0.5);
-  CGContextAddLineToPoint(context, endPoint.x + 0.5, endPoint.y + 0.5);
-  CGContextStrokePath(context);
-  CGContextRestoreGState(context);
 }
 
 
