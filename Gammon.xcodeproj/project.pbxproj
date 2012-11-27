@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A33E0BC16655C41003F82E3 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33E0BB16655C41003F82E3 /* Game.m */; };
+		5A33E0BD16655C41003F82E3 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33E0BB16655C41003F82E3 /* Game.m */; };
+		5A33E0C116655D61003F82E3 /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33E0C016655D61003F82E3 /* Slot.m */; };
+		5A33E0C216655D61003F82E3 /* Slot.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33E0C016655D61003F82E3 /* Slot.m */; };
 		5A7AD20916654FAA00B2972C /* wood_pattern_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7AD20716654FAA00B2972C /* wood_pattern_@2X.png */; };
 		5A7AD20A16654FAA00B2972C /* wood_pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A7AD20816654FAA00B2972C /* wood_pattern.png */; };
 		5A7AD20E16654FFA00B2972C /* UIColor+Gammon.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7AD20D16654FFA00B2972C /* UIColor+Gammon.m */; };
@@ -40,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A33E0BA16655C41003F82E3 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		5A33E0BB16655C41003F82E3 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		5A33E0BF16655D61003F82E3 /* Slot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slot.h; sourceTree = "<group>"; };
+		5A33E0C016655D61003F82E3 /* Slot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Slot.m; sourceTree = "<group>"; };
 		5A7AD20716654FAA00B2972C /* wood_pattern_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wood_pattern_@2X.png"; sourceTree = "<group>"; };
 		5A7AD20816654FAA00B2972C /* wood_pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wood_pattern.png; sourceTree = "<group>"; };
 		5A7AD20C16654FFA00B2972C /* UIColor+Gammon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Gammon.h"; sourceTree = "<group>"; };
@@ -137,6 +145,10 @@
 				5AB3E696166522280057473D /* Supporting Files */,
 				5A7AD20C16654FFA00B2972C /* UIColor+Gammon.h */,
 				5A7AD20D16654FFA00B2972C /* UIColor+Gammon.m */,
+				5A33E0BF16655D61003F82E3 /* Slot.h */,
+				5A33E0C016655D61003F82E3 /* Slot.m */,
+				5A33E0BA16655C41003F82E3 /* Game.h */,
+				5A33E0BB16655C41003F82E3 /* Game.m */,
 			);
 			path = Gammon;
 			sourceTree = "<group>";
@@ -293,6 +305,8 @@
 				5AB3E6AC166522280057473D /* ViewController.m in Sources */,
 				5AB3E6CC166531540057473D /* GameboardView.m in Sources */,
 				5A7AD20E16654FFA00B2972C /* UIColor+Gammon.m in Sources */,
+				5A33E0BC16655C41003F82E3 /* Game.m in Sources */,
+				5A33E0C116655D61003F82E3 /* Slot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +315,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AB3E6C1166522280057473D /* GammonTests.m in Sources */,
+				5A33E0BD16655C41003F82E3 /* Game.m in Sources */,
+				5A33E0C216655D61003F82E3 /* Slot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
