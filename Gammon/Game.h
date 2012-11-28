@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+
+@protocol GameDelegate <NSObject>
+
+- (void)boardUpdated;
+
+@end
+
+
 typedef enum GameState {
   Ended = 0,
   WhitesTurn,
@@ -17,11 +25,14 @@ typedef enum GameState {
 
 @interface Game : NSObject
 
+@property (weak, nonatomic) id<GameDelegate> delegate;
 @property (readonly, nonatomic) NSArray *slots;
 @property (readonly, assign) GameState state;
 @property (readonly, nonatomic) NSArray *roll;
 
 - (void)start;
 - (void)next;
+
+- (void)moveFrom:(NSUInteger)from to:(NSUInteger)to;
 
 @end

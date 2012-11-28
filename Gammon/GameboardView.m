@@ -8,11 +8,19 @@
 
 #import "GameboardView.h"
 
-#import "Game.h"
 #import "Slot.h"
 #import "UIColor+Gammon.h"
 
 const CGFloat kCheckerRadius = 28;
+const NSUInteger kPipsPerSection = 6;
+const NSUInteger kTotalPipCount = 4*kPipsPerSection;
+
+
+@interface GameboardView () {
+  NSMutableArray *_targetRects;
+}
+
+@end
 
 
 @implementation GameboardView
@@ -20,8 +28,17 @@ const CGFloat kCheckerRadius = 28;
 
 - (void)setup
 {
+  _targetRects = [NSMutableArray arrayWithCapacity:kTotalPipCount];
+  for (int i = 0; i < kTotalPipCount; ++i) {
+    _targetRects[i] = [NSNull null];
+  }
+  
   UIImage *patternImage = [UIImage imageNamed:@"wood_pattern"];
   self.backgroundColor = [UIColor colorWithPatternImage:patternImage];
+  
+  UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+  gr.numberOfTapsRequired = 1;
+  [self addGestureRecognizer:gr];
 }
 
 
@@ -55,19 +72,26 @@ const CGFloat kCheckerRadius = 28;
 {
   CGContextRef context = UIGraphicsGetCurrentContext();
 
-  int pipsPerSection = 6;
   CGFloat barWidth = 30;
-  CGFloat width = (self.bounds.size.width - barWidth)/2/pipsPerSection;
+  CGFloat width = (self.bounds.size.width - barWidth)/2/kPipsPerSection;
   CGFloat height = 120;
   CGColorRef pipColors[] = {
     [UIColor pipColor1].CGColor,
     [UIColor pipColor2].CGColor
   };
 
-  for (int i = 0; i < 2*pipsPerSection; ++i) {
-    CGFloat offset = i < pipsPerSection ? 0 : barWidth;
-    drawPip(context, CGRectMake(i*width + offset, 0, width, height), pipColors[i % 2], NO);
-    drawPip(context, CGRectMake(i*width + offset, self.bounds.size.height - height, width, height), pipColors[(i+1) % 2], YES);
+  for (int i = 0; i < 2*kPipsPerSection; ++i) {
+    CGFloat offset = i < kPipsPerSection ? 0 : barWidth;
+    { // top row
+      CGRect targetRect = CGRectMake(i*width + offset, 0, width, height);
+      drawPip(context, targetRect, pipColors[i % 2], NO);
+      _targetRects[i] = [NSValue valueWithCGRect:targetRect];
+    }
+    { // bottom row
+      CGRect targetRect = CGRectMake(i*width + offset, self.bounds.size.height - height, width, height);
+      drawPip(context, targetRect, pipColors[(i+1) % 2], YES);
+      _targetRects[kTotalPipCount - i -1] = [NSValue valueWithCGRect:targetRect];
+    }
   }
   
   if (self.game) {
@@ -88,11 +112,11 @@ const CGFloat kCheckerRadius = 28;
           down = YES;
         } else if (index <= 18) {
           xOffset = barWidth;
-          x = 4*pipsPerSection - index;
+          x = kTotalPipCount - index;
           down = NO;
         } else {
           xOffset = 0;
-          x = 4*pipsPerSection - index;
+          x = kTotalPipCount - index;
           down = NO;
         }
         for (int y = 0; y < s.count; ++y) {
@@ -129,6 +153,32 @@ void drawPip(CGContextRef ctx, CGRect rect, CGColorRef color, BOOL up)
   
   CGContextSetFillColorWithColor(ctx, color);
   CGContextFillPath(ctx);
+}
+
+
+- (void)boardUpdated
+{
+  NSLog(@"GameboardView: board updated");
+}
+
+
+- (void)handleTap:(UITapGestureRecognizer *)sender
+{
+  NSLog(@"tapped");
+  if (sender.state == UIGestureRecognizerStateEnded) {
+    CGPoint p = [sender locationInView:self];
+    NSUInteger index = NSNotFound;
+    for (NSValue *v in _targetRects) {
+      CGRect r = [v CGRectValue];
+      if (CGRectContainsPoint(r, p)) {
+        index = [_targetRects indexOfObject:v];
+        break;
+      }
+    }
+    if (index != NSNotFound) {
+      NSLog(@"index: %d", index);
+    }
+  }
 }
 
 

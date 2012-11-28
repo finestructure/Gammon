@@ -38,6 +38,7 @@
   self.startButton.bottomColor = [UIColor lightBrownColor];
   
   [self.game addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionNew context:nil];
+  self.game.delegate = self.gameboardView;
 }
 
 

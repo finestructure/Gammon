@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class Game;
+#import "Game.h"
 
-@interface GameboardView : UIView
+@interface GameboardView : UIView<GameDelegate>
 
 @property (nonatomic) Game *game;
 

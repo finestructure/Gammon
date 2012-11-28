@@ -90,6 +90,35 @@ const NSUInteger kSlotCount = 24;
 }
 
 
+- (void)moveFrom:(NSUInteger)from to:(NSUInteger)to
+{
+  // check if move is valid
+  Slot *origin = [self.slots objectAtIndex:from];
+  Slot *dest = [self.slots objectAtIndex:to];
+  
+  if ((self.state == WhitesTurn && origin.color != White) ||
+      (self.state == BlacksTurn && origin.color != Black)) {
+    // must move own checker
+    return;
+  }
+  if ((self.state == WhitesTurn && dest.color != White) ||
+      (self.state == BlacksTurn && dest.color != Black)) {
+    if (dest.count > 1) {
+      // dest blocked
+      return;
+    }
+  }
+  
+  // perform valid move
+  origin.count -= 1;
+  dest.count += 1;
+  
+  if ([self.delegate respondsToSelector:@selector(boardUpdated)]) {
+    [self.delegate boardUpdated];
+  }
+}
+
+
 - (NSArray *)roll
 {
   NSUInteger r1 = [self randomWithMax:5] +1;
