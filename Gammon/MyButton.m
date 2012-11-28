@@ -26,9 +26,13 @@
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
   
-  UIColor *borderColor = [UIColor colorWithRed:0.77f green:0.43f blue:0.00f alpha:1.00f];
-  UIColor *topColor = [UIColor colorWithRed:0.94f green:0.82f blue:0.52f alpha:1.00f];
-  UIColor *bottomColor = [UIColor colorWithRed:0.91f green:0.55f blue:0.00f alpha:1.00f];
+  UIColor *darkBrown = [UIColor colorWithRed:0.420 green:0.200 blue:0.063 alpha:1.000];
+  UIColor *middleBrown = [UIColor colorWithRed:0.694 green:0.424 blue:0.188 alpha:1.000];
+  UIColor *lightBrown = [UIColor colorWithRed:0.980 green:0.890 blue:0.682 alpha:1.000];
+  
+  UIColor *borderColor = darkBrown;
+  UIColor *topColor = lightBrown;
+  UIColor *bottomColor = middleBrown;
   UIColor *innerGlow = [UIColor colorWithWhite:1.0 alpha:0.5];
   
   // Gradient Declarations
