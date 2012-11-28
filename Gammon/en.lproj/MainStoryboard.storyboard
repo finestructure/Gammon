@@ -15,12 +15,28 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7x-4K-2sS" customClass="GameboardView">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryz-GE-a8D" customClass="MyButton">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="73" id="05z-uQ-VFJ"/>
+                                    <constraint firstAttribute="height" constant="44" id="TCv-3m-Xw2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="ryz-GE-a8D" firstAttribute="top" secondItem="3" secondAttribute="top" constant="12" id="2FB-dp-jbq"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="4s3-m5-tx5"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="95" id="7ON-lS-YSW"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="9XM-OC-23c"/>
+                            <constraint firstItem="ryz-GE-a8D" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="8" id="qN9-bI-ref"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="zDR-fb-tO5"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -37,6 +53,9 @@
     <classes>
         <class className="GameboardView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GameboardView.h"/>
+        </class>
+        <class className="MyButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyButton.h"/>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
