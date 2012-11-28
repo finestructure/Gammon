@@ -25,8 +25,7 @@
   [super viewDidLoad];
   
   self.game = [[Game alloc] init];
-  GameboardView *v = (GameboardView *)self.view;
-  v.game = self.game;
+  self.gameboardView.game = self.game;
 }
 
 - (void)didReceiveMemoryWarning

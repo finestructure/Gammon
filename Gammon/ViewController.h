@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class GameboardView;
+
 @interface ViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet GameboardView *gameboardView;
 
 @end
