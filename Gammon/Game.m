@@ -61,4 +61,21 @@ const NSUInteger kSlotCount = 24;
 }
 
 
+- (NSArray *)roll
+{
+  NSUInteger r1 = [self randomWithMax:5] +1;
+  NSUInteger r2 = [self randomWithMax:5] +1;
+  return @[
+    @(r1 > r2 ? r1 : r2),
+    @(r1 < r2 ? r1 : r2)
+  ];
+}
+
+
+- (NSUInteger)randomWithMax:(NSUInteger)maxValue {
+  NSUInteger r = arc4random() % (maxValue+1); // [0,maxValue]
+  return r;
+}
+
+
 @end

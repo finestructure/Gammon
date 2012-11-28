@@ -13,5 +13,9 @@
 @interface ViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet GameboardView *gameboardView;
+@property (weak, nonatomic) IBOutlet UIButton *die1;
+@property (weak, nonatomic) IBOutlet UIButton *die2;
+
+- (IBAction)startPressed:(id)sender;
 
 @end

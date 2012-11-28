@@ -13,4 +13,6 @@
 
 @property (nonatomic) NSArray *slots;
 
+- (NSArray *)roll;
+
 @end

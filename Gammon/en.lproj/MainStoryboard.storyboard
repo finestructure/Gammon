@@ -17,11 +17,41 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryz-GE-a8D" customClass="MyButton">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="TCv-3m-Xw2"/>
-                                    <constraint firstAttribute="width" constant="87" id="m7S-UV-i9q"/>
+                                    <constraint firstAttribute="height" constant="40" id="34r-z6-Jys"/>
+                                    <constraint firstAttribute="width" constant="40" id="ksa-pF-Dtf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="1">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNY-PY-gV5" customClass="MyButton">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="87" id="3Xa-L9-aeF"/>
+                                    <constraint firstAttribute="height" constant="44" id="yju-ii-IOR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startPressed:" destination="2" eventType="touchUpInside" id="KhI-SQ-diS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URW-N2-tAG" customClass="MyButton">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="4D9-lr-F4o"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="2">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -32,17 +62,24 @@
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="SNY-PY-gV5" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="23h-vG-gHo"/>
+                            <constraint firstItem="URW-N2-tAG" firstAttribute="bottom" secondItem="ryz-GE-a8D" secondAttribute="bottom" type="default" id="2qp-Zq-79Y"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="4s3-m5-tx5"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="9XM-OC-23c"/>
                             <constraint firstItem="ryz-GE-a8D" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="CcB-Cy-alY"/>
+                            <constraint firstItem="URW-N2-tAG" firstAttribute="leading" secondItem="ryz-GE-a8D" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="DoY-wM-g7k"/>
+                            <constraint firstItem="URW-N2-tAG" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="Elb-mX-C3x"/>
+                            <constraint firstItem="V7x-4K-2sS" firstAttribute="leading" secondItem="SNY-PY-gV5" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="He6-vV-lq5"/>
                             <constraint firstItem="ryz-GE-a8D" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="jHc-Hx-pcx"/>
-                            <constraint firstItem="V7x-4K-2sS" firstAttribute="leading" secondItem="ryz-GE-a8D" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="xbb-sW-bub"/>
+                            <constraint firstItem="SNY-PY-gV5" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="y7O-yr-uG9"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="zDR-fb-tO5"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
+                        <outlet property="die1" destination="ryz-GE-a8D" id="8Z5-v5-fVV"/>
+                        <outlet property="die2" destination="URW-N2-tAG" id="30x-EH-GKU"/>
                         <outlet property="gameboardView" destination="V7x-4K-2sS" id="ZgP-nP-FcI"/>
                     </connections>
                 </viewController>
@@ -63,6 +100,9 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="action" name="startPressed:"/>
+                <relationship kind="outlet" name="die1" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="die2" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="gameboardView" candidateClass="GameboardView"/>
             </relationships>
         </class>
