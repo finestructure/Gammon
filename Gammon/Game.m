@@ -13,6 +13,15 @@
 const NSUInteger kSlotCount = 24;
 
 
+@interface Game ()
+
+@property (nonatomic) NSMutableArray *slots;
+@property (assign) GameState state;
+@property (nonatomic) NSArray *roll;
+
+@end
+
+
 @implementation Game
 
 
@@ -58,6 +67,26 @@ const NSUInteger kSlotCount = 24;
   }
   
   self.slots = slots;
+  self.state = Ended;
+}
+
+
+- (void)start
+{
+  self.state = Ended;
+  [self next];
+}
+
+
+- (void)next
+{
+  self.roll = [self roll];
+
+  if (self.state == Ended) {
+    self.state = WhitesTurn;
+  } else {
+    self.state = (self.state == WhitesTurn) ? BlacksTurn : WhitesTurn;
+  }
 }
 
 

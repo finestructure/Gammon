@@ -8,11 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum GameState {
+  Ended = 0,
+  WhitesTurn,
+  BlacksTurn
+} GameState;
+
 
 @interface Game : NSObject
 
-@property (nonatomic) NSArray *slots;
+@property (readonly, nonatomic) NSArray *slots;
+@property (readonly, assign) GameState state;
+@property (readonly, nonatomic) NSArray *roll;
 
-- (NSArray *)roll;
+- (void)start;
+- (void)next;
 
 @end

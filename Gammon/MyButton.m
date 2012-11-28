@@ -15,9 +15,27 @@
 {
   self = [super initWithFrame:frame];
   if (self) {
-    // Initialization code
+    [self initialize];
   }
   return self;
+}
+
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+  self = [super initWithCoder:aDecoder];
+  if (self) {
+    [self initialize];
+  }
+  return self;
+}
+
+
+- (void)initialize
+{
+  self.borderColor = [UIColor blackColor];
+  self.topColor = [UIColor darkGrayColor];
+  self.bottomColor = [UIColor lightGrayColor];
 }
 
 
@@ -26,26 +44,19 @@
   CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
   CGContextRef context = UIGraphicsGetCurrentContext();
   
-  UIColor *darkBrown = [UIColor colorWithRed:0.420 green:0.200 blue:0.063 alpha:1.000];
-  UIColor *middleBrown = [UIColor colorWithRed:0.694 green:0.424 blue:0.188 alpha:1.000];
-  UIColor *lightBrown = [UIColor colorWithRed:0.980 green:0.890 blue:0.682 alpha:1.000];
-  
-  UIColor *borderColor = darkBrown;
-  UIColor *topColor = lightBrown;
-  UIColor *bottomColor = middleBrown;
   UIColor *innerGlow = [UIColor colorWithWhite:1.0 alpha:0.5];
   
   // Gradient Declarations
   NSArray *gradientColors = (@[
-                             (id)topColor.CGColor,
-                             (id)bottomColor.CGColor
+                             (id)self.topColor.CGColor,
+                             (id)self.bottomColor.CGColor
                              ]);
   
   CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)(gradientColors), NULL);
   
   NSArray *highlightedGradientColors = (@[
-                                        (id)bottomColor.CGColor,
-                                        (id)topColor.CGColor
+                                        (id)self.bottomColor.CGColor,
+                                        (id)self.topColor.CGColor
                                         ]);
   
   CGGradientRef highlightedGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)(highlightedGradientColors), NULL);
@@ -64,7 +75,7 @@
   CGContextDrawLinearGradient(context, background, p1, p2, 0);
   
   // Draw border
-  [borderColor setStroke];
+  [self.borderColor setStroke];
   roundedRectanglePath.lineWidth = 2;
   [roundedRectanglePath stroke];
   
@@ -85,7 +96,7 @@
 - (void)setHighlighted:(BOOL)highlighted
 {
   [self setNeedsDisplay];
-  [super setHighlighted:highlighted];
+  //  [super setHighlighted:highlighted];
 }
 
 

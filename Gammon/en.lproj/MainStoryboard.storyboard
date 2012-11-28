@@ -28,6 +28,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="die1Pressed:" destination="2" eventType="touchUpInside" id="Uln-Kp-1Xj"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNY-PY-gV5" customClass="MyButton">
                                 <constraints>
@@ -35,7 +38,7 @@
                                     <constraint firstAttribute="height" constant="44" id="yju-ii-IOR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Start">
+                                <state key="normal" title="Restart">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -58,6 +61,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="die2Pressed:" destination="2" eventType="touchUpInside" id="vik-MX-bV9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -81,6 +87,7 @@
                         <outlet property="die1" destination="ryz-GE-a8D" id="8Z5-v5-fVV"/>
                         <outlet property="die2" destination="URW-N2-tAG" id="30x-EH-GKU"/>
                         <outlet property="gameboardView" destination="V7x-4K-2sS" id="ZgP-nP-FcI"/>
+                        <outlet property="startButton" destination="SNY-PY-gV5" id="UNw-Ma-FMk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -100,10 +107,13 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="action" name="die1Pressed:"/>
+                <relationship kind="action" name="die2Pressed:"/>
                 <relationship kind="action" name="startPressed:"/>
-                <relationship kind="outlet" name="die1" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="die2" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="die1" candidateClass="MyButton"/>
+                <relationship kind="outlet" name="die2" candidateClass="MyButton"/>
                 <relationship kind="outlet" name="gameboardView" candidateClass="GameboardView"/>
+                <relationship kind="outlet" name="startButton" candidateClass="MyButton"/>
             </relationships>
         </class>
     </classes>

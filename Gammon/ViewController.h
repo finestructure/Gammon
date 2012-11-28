@@ -9,13 +9,17 @@
 #import <UIKit/UIKit.h>
 
 @class GameboardView;
+@class MyButton;
 
 @interface ViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet GameboardView *gameboardView;
-@property (weak, nonatomic) IBOutlet UIButton *die1;
-@property (weak, nonatomic) IBOutlet UIButton *die2;
+@property (weak, nonatomic) IBOutlet MyButton *die1;
+@property (weak, nonatomic) IBOutlet MyButton *die2;
+@property (weak, nonatomic) IBOutlet MyButton *startButton;
 
 - (IBAction)startPressed:(id)sender;
+- (IBAction)die1Pressed:(id)sender;
+- (IBAction)die2Pressed:(id)sender;
 
 @end

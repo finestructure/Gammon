@@ -10,4 +10,8 @@
 
 @interface MyButton : UIButton
 
+@property (nonatomic) UIColor *borderColor;
+@property (nonatomic) UIColor *topColor;
+@property (nonatomic) UIColor *bottomColor;
+
 @end

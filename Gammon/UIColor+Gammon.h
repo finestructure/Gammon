@@ -10,7 +10,11 @@
 
 @interface UIColor (Gammon)
 
++ (UIColor *)darkBrownColor;
++ (UIColor *)lightBrownColor;
++ (UIColor *)middleBrownColor;
 + (UIColor *)mossColor;
+
 + (UIColor *)pipColor1;
 + (UIColor *)pipColor2;
 

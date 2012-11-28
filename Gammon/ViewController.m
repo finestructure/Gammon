@@ -10,6 +10,8 @@
 
 #import "Game.h"
 #import "GameboardView.h"
+#import "MyButton.h"
+#import "UIColor+Gammon.h"
 
 
 @interface ViewController ()
@@ -28,8 +30,14 @@
   self.game = [[Game alloc] init];
   self.gameboardView.game = self.game;
   
-  self.die1.titleLabel.text = @"";
-  self.die2.titleLabel.text = @"";
+  self.die1.hidden = YES;
+  self.die2.hidden = YES;
+  
+  self.startButton.borderColor = [UIColor darkBrownColor];
+  self.startButton.topColor = [UIColor middleBrownColor];
+  self.startButton.bottomColor = [UIColor lightBrownColor];
+  
+  [self.game addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 
@@ -41,9 +49,32 @@
 
 
 - (IBAction)startPressed:(id)sender {
-  NSArray *roll = [self.game roll];
-  self.die1.titleLabel.text = [roll[0] stringValue];
-  self.die2.titleLabel.text = [roll[1] stringValue];
+  self.die1.hidden = NO;
+  self.die2.hidden = NO;
+  [self.game next];
+}
+
+- (IBAction)die1Pressed:(id)sender {
+  [self.game next];
+}
+
+- (IBAction)die2Pressed:(id)sender {
+  [self.game next];
+}
+
+
+#pragma mark - KVO
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  NSLog(@"change: %@ %@", keyPath, change);
+  if (object == self.game && [keyPath isEqualToString:@"state"]) {
+    NSArray *roll = self.game.roll;
+    NSLog(@"roll: %@", roll);
+    self.die1.titleLabel.text = [roll[0] stringValue];
+    self.die2.titleLabel.text = [roll[1] stringValue];
+  }
 }
 
 
