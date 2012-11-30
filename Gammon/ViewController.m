@@ -9,7 +9,6 @@
 #import "ViewController.h"
 
 #import "Game.h"
-#import "GameboardView.h"
 #import "MyButton.h"
 #import "UIColor+Gammon.h"
 
@@ -39,6 +38,8 @@
   
   [self.game addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionNew context:nil];
   self.game.delegate = self.gameboardView;
+  
+  self.gameboardView.delegate = self;
 }
 
 
@@ -61,6 +62,18 @@
 
 - (IBAction)die2Pressed:(id)sender {
   [self.game next];
+}
+
+
+#pragma mark - BoardDelegate
+
+
+- (void)pipTapped:(NSUInteger)index
+{
+  NSLog(@"pip tapped: %d", index);
+  if (self.game.state != Ended && [self.game movesLeft]) {
+    [self.game moveFrom:index by:[self.game.availableMoves[0] unsignedIntegerValue]];
+  }
 }
 
 

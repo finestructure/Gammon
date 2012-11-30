@@ -29,10 +29,12 @@ typedef enum GameState {
 @property (readonly, nonatomic) NSArray *slots;
 @property (readonly, assign) GameState state;
 @property (readonly, nonatomic) NSArray *roll;
+@property (nonatomic) NSMutableArray *availableMoves;
 
 - (void)start;
 - (void)next;
 
-- (void)moveFrom:(NSUInteger)from to:(NSUInteger)to;
+- (void)moveFrom:(NSUInteger)from by:(NSUInteger)by;
+- (BOOL)movesLeft;
 
 @end

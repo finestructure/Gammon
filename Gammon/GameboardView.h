@@ -10,8 +10,17 @@
 
 #import "Game.h"
 
+
+@protocol BoardDelegate <NSObject>
+
+- (void)pipTapped:(NSUInteger)index;
+
+@end
+
+
 @interface GameboardView : UIView<GameDelegate>
 
+@property (weak, nonatomic) id<BoardDelegate> delegate;
 @property (nonatomic) Game *game;
 
 @end

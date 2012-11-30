@@ -159,12 +159,12 @@ void drawPip(CGContextRef ctx, CGRect rect, CGColorRef color, BOOL up)
 - (void)boardUpdated
 {
   NSLog(@"GameboardView: board updated");
+  [self setNeedsDisplay];
 }
 
 
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
-  NSLog(@"tapped");
   if (sender.state == UIGestureRecognizerStateEnded) {
     CGPoint p = [sender locationInView:self];
     NSUInteger index = NSNotFound;
@@ -176,7 +176,10 @@ void drawPip(CGContextRef ctx, CGRect rect, CGColorRef color, BOOL up)
       }
     }
     if (index != NSNotFound) {
-      NSLog(@"index: %d", index);
+      if ([self.delegate respondsToSelector:@selector(pipTapped:)]) {
+        NSUInteger oneBasedIndex = index +1;
+        [self.delegate pipTapped:oneBasedIndex];
+      }
     }
   }
 }

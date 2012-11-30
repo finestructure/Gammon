@@ -18,6 +18,7 @@ const NSUInteger kSlotCount = 24;
 @property (nonatomic) NSMutableArray *slots;
 @property (assign) GameState state;
 @property (nonatomic) NSArray *roll;
+@property (nonatomic) NSMutableArray *moved;
 
 @end
 
@@ -81,6 +82,14 @@ const NSUInteger kSlotCount = 24;
 - (void)next
 {
   self.roll = [self roll];
+  self.moved = [NSMutableArray array];
+  if ([self.roll[0] isEqualToNumber:self.roll[1]]) {
+    for (int i = 0; i < 4; ++i) {
+      [self.availableMoves addObject:self.roll[0]];
+    }
+  } else {
+    self.availableMoves = [self.roll mutableCopy];
+  }
 
   if (self.state == Ended) {
     self.state = WhitesTurn;
@@ -90,11 +99,26 @@ const NSUInteger kSlotCount = 24;
 }
 
 
-- (void)moveFrom:(NSUInteger)from to:(NSUInteger)to
+- (void)moveFrom:(NSUInteger)from by:(NSUInteger)by
 {
+  NSLog(@"moving from %d by %d", from, by);
+
+  if (! [self movesLeft]) {
+    return;
+  }
+  
+  NSUInteger index = [self.availableMoves indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+    return [obj unsignedIntegerValue] == by;
+  }];
+  if (index == NSNotFound) {
+    // trying a move that has no corresponding die
+    return;
+  }
+  
   // check if move is valid
+#warning handle counter clockwise move!
   Slot *origin = [self.slots objectAtIndex:from];
-  Slot *dest = [self.slots objectAtIndex:to];
+  Slot *dest = [self.slots objectAtIndex:from+by];
   
   if ((self.state == WhitesTurn && origin.color != White) ||
       (self.state == BlacksTurn && origin.color != Black)) {
@@ -113,9 +137,19 @@ const NSUInteger kSlotCount = 24;
   origin.count -= 1;
   dest.count += 1;
   
+  NSLog(@"moved from %d to %d", from, from + by);
+  [self.moved addObject:@(by)];
+  [self.availableMoves removeObjectAtIndex:index];
+  
   if ([self.delegate respondsToSelector:@selector(boardUpdated)]) {
     [self.delegate boardUpdated];
   }
+}
+
+
+- (BOOL)movesLeft
+{
+  return [self.availableMoves count] > 0;
 }
 
 

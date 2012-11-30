@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class GameboardView;
+#import "GameboardView.h"
+
 @class MyButton;
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<BoardDelegate>
 
 @property (weak, nonatomic) IBOutlet GameboardView *gameboardView;
 @property (weak, nonatomic) IBOutlet MyButton *die1;
