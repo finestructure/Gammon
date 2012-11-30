@@ -31,7 +31,7 @@ typedef enum GameState {
 @property (readonly, nonatomic) NSArray *roll;
 @property (nonatomic) NSMutableArray *availableMoves;
 
-- (void)start;
+- (void)restart;
 - (void)next;
 
 - (void)moveFrom:(NSUInteger)from by:(NSUInteger)by;

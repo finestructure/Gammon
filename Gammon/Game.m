@@ -72,9 +72,9 @@ const NSUInteger kSlotCount = 24;
 }
 
 
-- (void)start
+- (void)restart
 {
-  self.state = Ended;
+  [self setup];
   [self next];
 }
 

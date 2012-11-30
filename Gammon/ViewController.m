@@ -40,6 +40,8 @@
   self.game.delegate = self.gameboardView;
   
   self.gameboardView.delegate = self;
+  
+  [self restart];
 }
 
 
@@ -50,15 +52,26 @@
 }
 
 
-- (IBAction)startPressed:(id)sender {
+- (void)restart
+{
   self.die1.hidden = NO;
   self.die2.hidden = NO;
-  [self.game next];
+  [self.game restart];
 }
+
+
+#pragma mark - Actions
+
+
+- (IBAction)startPressed:(id)sender {
+  [self restart];
+}
+
 
 - (IBAction)die1Pressed:(id)sender {
   [self.game next];
 }
+
 
 - (IBAction)die2Pressed:(id)sender {
   [self.game next];
