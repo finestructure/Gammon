@@ -81,14 +81,15 @@ const NSUInteger kSlotCount = 24;
 
 - (void)next
 {
-  self.roll = [self roll];
+  self.roll = [self rollDice];
   self.moved = [NSMutableArray array];
+  self.availableMoves = [NSMutableArray array];
   if ([self.roll[0] isEqualToNumber:self.roll[1]]) {
     for (int i = 0; i < 4; ++i) {
       [self.availableMoves addObject:self.roll[0]];
     }
   } else {
-    self.availableMoves = [self.roll mutableCopy];
+    [self.availableMoves addObjectsFromArray:self.roll];
   }
 
   if (self.state == Ended) {
@@ -125,8 +126,8 @@ const NSUInteger kSlotCount = 24;
     // must move own checker
     return;
   }
-  if ((self.state == WhitesTurn && dest.color != White) ||
-      (self.state == BlacksTurn && dest.color != Black)) {
+  if ((dest.color == White && self.state != WhitesTurn) ||
+      (dest.color == Black && self.state != BlacksTurn)) {
     if (dest.count > 1) {
       // dest blocked
       return;
@@ -136,6 +137,9 @@ const NSUInteger kSlotCount = 24;
   // perform valid move
   origin.count -= 1;
   dest.count += 1;
+  if (dest.color == Free) {
+    dest.color = origin.color;
+  }
   
   NSLog(@"moved from %d to %d", from, from + by);
   [self.moved addObject:@(by)];
@@ -153,7 +157,7 @@ const NSUInteger kSlotCount = 24;
 }
 
 
-- (NSArray *)roll
+- (NSArray *)rollDice
 {
   NSUInteger r1 = [self randomWithMax:5] +1;
   NSUInteger r2 = [self randomWithMax:5] +1;

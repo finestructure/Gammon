@@ -10,4 +10,13 @@
 
 @implementation Slot
 
+- (id)init
+{
+  self = [super init];
+  if (self) {
+    self.color = Free;
+  }
+  return self;
+}
+
 @end

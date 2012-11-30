@@ -10,7 +10,8 @@
 
 
 typedef enum CheckerColor {
-  Black = 0,
+  Free = 0,
+  Black,
   White
 } CheckerColor;
 
