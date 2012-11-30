@@ -14,7 +14,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ryz-GE-a8D" customClass="MyButton">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="34r-z6-Jys"/>
+                                    <constraint firstAttribute="height" constant="40" id="b10-y4-0rE"/>
                                     <constraint firstAttribute="width" constant="40" id="ksa-pF-Dtf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -26,12 +26,12 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="die1Pressed:" destination="2" eventType="touchUpInside" id="Uln-Kp-1Xj"/>
+                                    <action selector="die1Pressed:" destination="2" eventType="touchUpInside" id="dyL-xE-zyj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SNY-PY-gV5" customClass="MyButton">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="87" id="3Xa-L9-aeF"/>
+                                    <constraint firstAttribute="width" constant="87" id="iIr-xa-Uai"/>
                                     <constraint firstAttribute="height" constant="44" id="yju-ii-IOR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -59,7 +59,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="die2Pressed:" destination="2" eventType="touchUpInside" id="vik-MX-bV9"/>
+                                    <action selector="die2Pressed:" destination="2" eventType="touchUpInside" id="3ge-Hd-ggd"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V7x-4K-2sS" customClass="GameboardView">
@@ -69,13 +69,14 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SNY-PY-gV5" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="23h-vG-gHo"/>
-                            <constraint firstItem="URW-N2-tAG" firstAttribute="bottom" secondItem="ryz-GE-a8D" secondAttribute="bottom" type="default" id="2qp-Zq-79Y"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="4s3-m5-tx5"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="trailing" secondItem="3" secondAttribute="trailing" type="default" id="9XM-OC-23c"/>
                             <constraint firstItem="ryz-GE-a8D" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="CcB-Cy-alY"/>
                             <constraint firstItem="URW-N2-tAG" firstAttribute="leading" secondItem="ryz-GE-a8D" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="DoY-wM-g7k"/>
                             <constraint firstItem="URW-N2-tAG" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="Elb-mX-C3x"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="leading" secondItem="SNY-PY-gV5" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="He6-vV-lq5"/>
+                            <constraint firstItem="URW-N2-tAG" firstAttribute="bottom" secondItem="ryz-GE-a8D" secondAttribute="bottom" type="default" id="Z9k-wQ-MPI"/>
+                            <constraint firstItem="URW-N2-tAG" firstAttribute="baseline" secondItem="ryz-GE-a8D" secondAttribute="baseline" type="default" id="am7-VK-Ghw"/>
                             <constraint firstItem="ryz-GE-a8D" firstAttribute="top" secondItem="3" secondAttribute="top" type="default" id="jHc-Hx-pcx"/>
                             <constraint firstItem="SNY-PY-gV5" firstAttribute="leading" secondItem="3" secondAttribute="leading" type="default" id="y7O-yr-uG9"/>
                             <constraint firstItem="V7x-4K-2sS" firstAttribute="bottom" secondItem="3" secondAttribute="bottom" type="default" id="zDR-fb-tO5"/>
@@ -94,29 +95,6 @@
             </objects>
         </scene>
     </scenes>
-    <classes>
-        <class className="GameboardView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameboardView.h"/>
-        </class>
-        <class className="MyButton" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyButton.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="die1Pressed:"/>
-                <relationship kind="action" name="die2Pressed:"/>
-                <relationship kind="action" name="startPressed:"/>
-                <relationship kind="outlet" name="die1" candidateClass="MyButton"/>
-                <relationship kind="outlet" name="die2" candidateClass="MyButton"/>
-                <relationship kind="outlet" name="gameboardView" candidateClass="GameboardView"/>
-                <relationship kind="outlet" name="startButton" candidateClass="MyButton"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

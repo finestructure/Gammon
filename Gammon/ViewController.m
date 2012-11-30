@@ -29,9 +29,6 @@
   self.game = [[Game alloc] init];
   self.gameboardView.game = self.game;
   
-  self.die1.hidden = YES;
-  self.die2.hidden = YES;
-  
   self.startButton.borderColor = [UIColor darkBrownColor];
   self.startButton.topColor = [UIColor middleBrownColor];
   self.startButton.bottomColor = [UIColor lightBrownColor];
@@ -78,6 +75,11 @@
 }
 
 
+- (IBAction)rollPressed:(id)sender {
+  [self.game next];
+}
+
+
 #pragma mark - BoardDelegate
 
 
@@ -101,6 +103,37 @@
     NSLog(@"roll: %@", roll);
     self.die1.titleLabel.text = [roll[0] stringValue];
     self.die2.titleLabel.text = [roll[1] stringValue];
+    switch (self.game.state) {
+      case Ended:
+        self.die1.hidden = YES;
+        self.die2.hidden = YES;
+        break;
+        
+      case WhitesTurn:
+        self.die1.hidden = NO;
+        self.die2.hidden = NO;
+        self.die1.topColor = [UIColor lightGrayColor];
+        self.die1.bottomColor = [UIColor whiteColor];
+        self.die2.topColor = [UIColor lightGrayColor];
+        self.die2.bottomColor = [UIColor whiteColor];
+        [self.die1 setNeedsDisplay];
+        [self.die2 setNeedsDisplay];
+        break;
+        
+      case BlacksTurn:
+        self.die1.hidden = NO;
+        self.die2.hidden = NO;
+        self.die1.topColor = [UIColor darkGrayColor];
+        self.die1.bottomColor = [UIColor lightGrayColor];
+        self.die2.topColor = [UIColor darkGrayColor];
+        self.die2.bottomColor = [UIColor lightGrayColor];
+        [self.die1 setNeedsDisplay];
+        [self.die2 setNeedsDisplay];
+        break;
+        
+      default:
+        break;
+    }
   }
 }
 

@@ -69,6 +69,10 @@ const NSUInteger kSlotCount = 24;
   
   self.slots = slots;
   self.state = Ended;
+  
+  if ([self.delegate respondsToSelector:@selector(boardUpdated)]) {
+    [self.delegate boardUpdated];
+  }
 }
 
 
