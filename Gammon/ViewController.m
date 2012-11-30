@@ -101,8 +101,8 @@
   if (object == self.game && [keyPath isEqualToString:@"state"]) {
     NSArray *roll = self.game.roll;
     NSLog(@"roll: %@", roll);
-    self.die1.titleLabel.text = [roll[0] stringValue];
-    self.die2.titleLabel.text = [roll[1] stringValue];
+    [self.die1 setTitle:[roll[0] stringValue] forState:UIControlStateNormal];
+    [self.die2 setTitle:[roll[1] stringValue] forState:UIControlStateNormal];
     switch (self.game.state) {
       case Ended:
         self.die1.hidden = YES;
