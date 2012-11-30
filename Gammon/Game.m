@@ -109,31 +109,46 @@ const NSUInteger kSlotCount = 24;
   NSLog(@"moving from %d by %d", from, by);
 
   if (! [self movesLeft]) {
+    NSLog(@"no more moves!");
     return;
   }
-  
+
+  if (self.state == Ended) {
+    NSLog(@"game over!");
+    return;
+  }
+
   NSUInteger index = [self.availableMoves indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
     return [obj unsignedIntegerValue] == by;
   }];
   if (index == NSNotFound) {
     // trying a move that has no corresponding die
+    NSLog(@"move not available!");
     return;
   }
   
   // check if move is valid
 #warning handle counter clockwise move!
   Slot *origin = [self.slots objectAtIndex:from];
-  Slot *dest = [self.slots objectAtIndex:from+by];
+  Slot *dest;
+  if (self.state == WhitesTurn) {
+    dest = [self.slots objectAtIndex:from + by];
+  } else {
+    // black moves counter clockwise
+    dest = [self.slots objectAtIndex:from - by];
+  }
   
   if ((self.state == WhitesTurn && origin.color != White) ||
       (self.state == BlacksTurn && origin.color != Black)) {
     // must move own checker
+    NSLog(@"cannot move opponents checker!");
     return;
   }
   if ((dest.color == White && self.state != WhitesTurn) ||
       (dest.color == Black && self.state != BlacksTurn)) {
     if (dest.count > 1) {
       // dest blocked
+      NSLog(@"destination blocked!");
       return;
     }
   }
