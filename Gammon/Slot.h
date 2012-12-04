@@ -18,6 +18,7 @@ typedef enum CheckerColor {
 
 @interface Slot : NSObject
 
+@property (assign) NSUInteger index;
 @property (assign) CheckerColor color;
 @property (assign) NSUInteger count;
 

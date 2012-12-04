@@ -10,6 +10,7 @@
 
 @implementation Slot
 
+
 - (id)init
 {
   self = [super init];
@@ -18,5 +19,12 @@
   }
   return self;
 }
+
+
+- (NSString *)description
+{
+  return [NSString stringWithFormat:@"Slot %d, %@ (%d)", self.index, (self.color == Free ? @"Free" : (self.color == White ? @"White" : @"Black")), self.count];
+}
+
 
 @end

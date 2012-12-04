@@ -42,7 +42,9 @@ const NSUInteger kSlotCount = 24;
   // Slot 0 contains checkers on the bar.
   NSMutableArray *slots = [NSMutableArray arrayWithCapacity:kSlotCount+1];
   for (NSUInteger i = 0; i < kSlotCount+1; ++i) {
-    [slots addObject:[[Slot alloc] init]];
+    Slot *s = [[Slot alloc] init];
+    s.index = i;
+    [slots addObject:s];
   }
   
   // Board layout, format: checker count, color, index
@@ -104,18 +106,18 @@ const NSUInteger kSlotCount = 24;
 }
 
 
-- (void)moveFrom:(NSUInteger)from by:(NSUInteger)by
+- (BOOL)moveFrom:(NSUInteger)from by:(NSUInteger)by
 {
   NSLog(@"moving from %d by %d", from, by);
 
   if (! [self movesLeft]) {
     NSLog(@"no more moves!");
-    return;
+    return NO;
   }
 
   if (self.state == Ended) {
     NSLog(@"game over!");
-    return;
+    return NO;
   }
 
   NSUInteger index = [self.availableMoves indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
@@ -124,11 +126,10 @@ const NSUInteger kSlotCount = 24;
   if (index == NSNotFound) {
     // trying a move that has no corresponding die
     NSLog(@"move not available!");
-    return;
+    return NO;
   }
   
   // check if move is valid
-#warning handle counter clockwise move!
   Slot *origin = [self.slots objectAtIndex:from];
   Slot *dest;
   if (self.state == WhitesTurn) {
@@ -142,22 +143,26 @@ const NSUInteger kSlotCount = 24;
       (self.state == BlacksTurn && origin.color != Black)) {
     // must move own checker
     NSLog(@"cannot move opponents checker!");
-    return;
+    return NO;
   }
   if ((dest.color == White && self.state != WhitesTurn) ||
       (dest.color == Black && self.state != BlacksTurn)) {
     if (dest.count > 1) {
       // dest blocked
       NSLog(@"destination blocked!");
-      return;
+      return NO;
     }
   }
   
   // perform valid move
   origin.count -= 1;
   dest.count += 1;
+  // update field state
   if (dest.color == Free) {
     dest.color = origin.color;
+  }
+  if (origin.count == 0) {
+    origin.color = Free;
   }
   
   NSLog(@"moved from %d to %d", from, from + by);
@@ -167,6 +172,8 @@ const NSUInteger kSlotCount = 24;
   if ([self.delegate respondsToSelector:@selector(boardUpdated)]) {
     [self.delegate boardUpdated];
   }
+  
+  return YES;
 }
 
 
