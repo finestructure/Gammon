@@ -11,9 +11,11 @@
 #import "Slot.h"
 #import "UIColor+Gammon.h"
 
-const CGFloat kCheckerRadius = 28;
+const CGFloat kBarWidth = 30;
+const CGFloat kCheckerRadius = 24;
 const NSUInteger kPipsPerSection = 6;
 const NSUInteger kTotalPipCount = 4*kPipsPerSection;
+const CGFloat kPipHeight = 120;
 
 
 @interface GameboardView () {
@@ -64,36 +66,52 @@ const NSUInteger kTotalPipCount = 4*kPipsPerSection;
 
 - (void)drawRect:(CGRect)rect
 {  
-  [self drawBoard];
+  CGContextRef context = UIGraphicsGetCurrentContext();
+
+  CGSize boardSize = self.bounds.size;
+  CGFloat pipWidth = (boardSize.width - kBarWidth)/2/kPipsPerSection;
+
+  [self drawBar:context boardSize:boardSize];
+  [self drawPips:context pipWidth:pipWidth];
+  [self drawCheckers:context boardSize:boardSize pipWidth:pipWidth];
 }
 
 
-- (void)drawBoard
+- (void)drawBar:(CGContextRef)context boardSize:(CGSize)boardSize
 {
-  CGContextRef context = UIGraphicsGetCurrentContext();
+  CGColorRef color = [UIColor darkBrownColor].CGColor;
+  CGContextSetFillColorWithColor(context, color);
+  CGFloat barX = boardSize.width/2 - kBarWidth/2;
+  CGRect rect = CGRectMake(barX, 0, kBarWidth, boardSize.height);
+  CGContextFillRect(context, rect);
+}
 
-  CGFloat barWidth = 30;
-  CGFloat width = (self.bounds.size.width - barWidth)/2/kPipsPerSection;
-  CGFloat height = 120;
+
+- (void)drawPips:(CGContextRef)context pipWidth:(CGFloat)pipWidth
+{
   CGColorRef pipColors[] = {
     [UIColor pipColor1].CGColor,
     [UIColor pipColor2].CGColor
   };
-
+  
   for (int i = 0; i < 2*kPipsPerSection; ++i) {
-    CGFloat offset = i < kPipsPerSection ? 0 : barWidth;
+    CGFloat offset = i < kPipsPerSection ? 0 : kBarWidth;
     { // top row
-      CGRect targetRect = CGRectMake(i*width + offset, 0, width, height);
+      CGRect targetRect = CGRectMake(i*pipWidth + offset, 0, pipWidth, kPipHeight);
       drawPip(context, targetRect, pipColors[i % 2], NO);
       _targetRects[i] = [NSValue valueWithCGRect:targetRect];
     }
     { // bottom row
-      CGRect targetRect = CGRectMake(i*width + offset, self.bounds.size.height - height, width, height);
+      CGRect targetRect = CGRectMake(i*pipWidth + offset, self.bounds.size.height - kPipHeight, pipWidth, kPipHeight);
       drawPip(context, targetRect, pipColors[(i+1) % 2], YES);
       _targetRects[kTotalPipCount - i -1] = [NSValue valueWithCGRect:targetRect];
     }
   }
-  
+}
+
+
+- (void)drawCheckers:(CGContextRef)context boardSize:(CGSize)boardSize pipWidth:(CGFloat)pipWidth
+{
   if (self.game) {
     for (Slot *s in self.game.slots) {
       if (s.count > 0) {
@@ -107,11 +125,11 @@ const NSUInteger kTotalPipCount = 4*kPipsPerSection;
           x = index -1;
           down = YES;
         } else if (index <= 12) {
-          xOffset = barWidth;
+          xOffset = kBarWidth;
           x = index -1;
           down = YES;
         } else if (index <= 18) {
-          xOffset = barWidth;
+          xOffset = kBarWidth;
           x = kTotalPipCount - index;
           down = NO;
         } else {
@@ -120,39 +138,13 @@ const NSUInteger kTotalPipCount = 4*kPipsPerSection;
           down = NO;
         }
         for (int y = 0; y < s.count; ++y) {
-          CGFloat yPos = down ? y*kCheckerRadius : self.bounds.size.height - (y +1)*kCheckerRadius;
-          CGRect rect = CGRectMake(x*width + xOffset + (width-kCheckerRadius)/2, yPos, kCheckerRadius, kCheckerRadius);
+          CGFloat yPos = down ? y*kCheckerRadius : boardSize.height - (y +1)*kCheckerRadius;
+          CGRect rect = CGRectMake(x*pipWidth + xOffset + (pipWidth-kCheckerRadius)/2, yPos, kCheckerRadius, kCheckerRadius);
           drawChecker(context, rect, color.CGColor);
         }
       }
     }
   }
-}
-
-
-void drawChecker(CGContextRef ctx, CGRect rect, CGColorRef color)
-{
-  CGContextSetFillColorWithColor(ctx, color);
-  CGContextFillEllipseInRect(ctx, rect);
-}
-
-
-void drawPip(CGContextRef ctx, CGRect rect, CGColorRef color, BOOL up)
-{
-  CGContextBeginPath(ctx);
-  if (up) {
-    CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect));
-    CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMinY(rect));
-    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMaxY(rect));
-  } else {
-    CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMinY(rect));
-    CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMaxY(rect));
-    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMinY(rect));
-  }
-  CGContextClosePath(ctx);
-  
-  CGContextSetFillColorWithColor(ctx, color);
-  CGContextFillPath(ctx);
 }
 
 
@@ -182,6 +174,35 @@ void drawPip(CGContextRef ctx, CGRect rect, CGColorRef color, BOOL up)
       }
     }
   }
+}
+
+
+#pragma mark - Draw helpers
+
+
+void drawChecker(CGContextRef ctx, CGRect rect, CGColorRef color)
+{
+  CGContextSetFillColorWithColor(ctx, color);
+  CGContextFillEllipseInRect(ctx, rect);
+}
+
+
+void drawPip(CGContextRef ctx, CGRect rect, CGColorRef color, BOOL up)
+{
+  CGContextBeginPath(ctx);
+  if (up) {
+    CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMaxY(rect));
+    CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMinY(rect));
+    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMaxY(rect));
+  } else {
+    CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMinY(rect));
+    CGContextAddLineToPoint(ctx, CGRectGetMidX(rect), CGRectGetMaxY(rect));
+    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMinY(rect));
+  }
+  CGContextClosePath(ctx);
+  
+  CGContextSetFillColorWithColor(ctx, color);
+  CGContextFillPath(ctx);
 }
 
 
