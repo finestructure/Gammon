@@ -14,6 +14,7 @@
 @protocol BoardDelegate <NSObject>
 
 - (void)pipTapped:(NSUInteger)index;
+- (void)barTapped;
 
 @end
 

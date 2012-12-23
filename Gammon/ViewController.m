@@ -92,6 +92,15 @@
 }
 
 
+- (void)barTapped
+{
+  NSLog(@"bar tapped");
+  if (self.game.state != Ended && [self.game movesLeft]) {
+    [self.game moveFrom:0 by:[self.game.availableMoves[0] unsignedIntegerValue]];
+  }
+}
+
+
 #pragma mark - KVO
 
 

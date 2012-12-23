@@ -19,7 +19,8 @@ const CGFloat kPipHeight = 120;
 
 
 @interface GameboardView () {
-  NSMutableArray *_targetRects;
+  NSMutableArray *_pipRects;
+  CGRect _barRect;
 }
 
 @property (readonly) CGSize boardSize;
@@ -33,10 +34,11 @@ const CGFloat kPipHeight = 120;
 
 - (void)setup
 {
-  _targetRects = [NSMutableArray arrayWithCapacity:kTotalPipCount];
+  _pipRects = [NSMutableArray arrayWithCapacity:kTotalPipCount];
   for (int i = 0; i < kTotalPipCount; ++i) {
-    _targetRects[i] = [NSNull null];
+    _pipRects[i] = [NSNull null];
   }
+  _barRect = CGRectZero;
   
   UIImage *patternImage = [UIImage imageNamed:@"wood_pattern"];
   self.backgroundColor = [UIColor colorWithPatternImage:patternImage];
@@ -94,8 +96,8 @@ const CGFloat kPipHeight = 120;
   CGColorRef color = [UIColor darkBrownColor].CGColor;
   CGContextSetFillColorWithColor(context, color);
   CGFloat barX = self.boardSize.width/2 - kBarWidth/2;
-  CGRect rect = CGRectMake(barX, 0, kBarWidth, self.boardSize.height);
-  CGContextFillRect(context, rect);
+  _barRect = CGRectMake(barX, 0, kBarWidth, self.boardSize.height);
+  CGContextFillRect(context, _barRect);
 }
 
 
@@ -110,7 +112,7 @@ const CGFloat kPipHeight = 120;
     CGRect pipRect = [self pipRectAtIndex:i];
     BOOL topRow = (i < kTotalPipCount/2);
     drawPip(context, pipRect, pipColors[i % 2], topRow);
-    _targetRects[i] = [NSValue valueWithCGRect:pipRect];
+    _pipRects[i] = [NSValue valueWithCGRect:pipRect];
   }
 }
 
@@ -202,15 +204,19 @@ const CGFloat kPipHeight = 120;
   if (sender.state == UIGestureRecognizerStateEnded) {
     CGPoint p = [sender locationInView:self];
     { // has the bar been tapped?
-      
+      if (CGRectContainsPoint(_barRect, p)) {
+        if ([self.delegate respondsToSelector:@selector(barTapped)]) {
+          [self.delegate barTapped];
+        }
+      }
     }
     
     { // has a pip been tapped?
       NSUInteger index = NSNotFound;
-      for (NSValue *v in _targetRects) {
+      for (NSValue *v in _pipRects) {
         CGRect r = [v CGRectValue];
         if (CGRectContainsPoint(r, p)) {
-          index = [_targetRects indexOfObject:v];
+          index = [_pipRects indexOfObject:v];
           break;
         }
       }
