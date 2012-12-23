@@ -204,4 +204,99 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
 }
 
 
+- (void)test_gameDescription
+{
+  NSString *s = [game description];
+  NSString *expected =
+  @" 1  2  3  4  5  6     7  8  9  10 11 12\n"
+  @" O              X        X           O \n"
+  @" O              X        X           O \n"
+  @"                X        X           O \n"
+  @"                X                    O \n"
+  @"                X                    O \n"
+  @"\n"
+  @"\n"
+  @"                O                    X \n"
+  @"                O                    X \n"
+  @"                O        O           X \n"
+  @" X              O        O           X \n"
+  @" X              O        O           X \n"
+  @" 24 23 22 21 20 19    18 17 16 15 14 13";
+
+  STAssertEquals([s length], [expected length], nil);
+  NSArray *sLines = [s componentsSeparatedByString:@"\n"];
+  NSArray *eLines = [expected componentsSeparatedByString:@"\n"];
+  STAssertEquals([sLines count], [eLines count], nil);
+  for (int i = 0; i < MIN([sLines count], [eLines count]); ++i) {
+    STAssertEqualObjects(sLines[i], eLines[i], @"Line %d expected: \n\"%@\" was \n\"%@\"", i, eLines[i], sLines[i]);
+  }
+  STAssertEqualObjects(s, expected, nil);
+//  NSLog(@"=============================  exp:\n%@", expected);
+//  NSLog(@"=============================  desc:\n%@", s);
+//  NSLog(@"=============================");
+}
+
+
+- (void)test_gameDescription_2
+{
+  game.fixedRoll = @[@4, @3];
+  [game restart];
+  
+  STAssertEquals(game.state, WhitesTurn, nil);
+  STAssertTrue([game moveFrom:1 by:4], nil);
+  STAssertTrue([game moveFrom:1 by:3], nil);
+  
+  game.fixedRoll = @[@2, @1];
+  [game next];
+  
+  STAssertEquals(game.state, BlacksTurn, nil);
+  STAssertTrue([game moveFrom:6 by:2], nil);
+  STAssertTrue([game moveFrom:6 by:1], nil);
+
+  game.fixedRoll = @[@4, @3];
+  [game next];
+
+  STAssertEquals(game.state, WhitesTurn, nil);
+  STAssertTrue([game moveFrom:0 by:4], nil);
+  
+  STAssertEquals(game.whiteBar.count, 1u, nil);
+  STAssertEquals(game.blackBar.count, 1u, nil);
+  AssertSlot(1, Free, 0);
+  AssertSlot(2, Free, 0);
+  AssertSlot(3, Free, 0);
+  AssertSlot(4, White, 1);
+  AssertSlot(5, Black, 1);
+  AssertSlot(6, Black, 3);
+
+  NSString *s = [game description];
+  NSString *expected =
+  @" 1  2  3  4  5  6     7  8  9  10 11 12\n"
+  @"          O  X  X  O     X           O \n"
+  @"                X        X           O \n"
+  @"                X        X           O \n"
+  @"                                     O \n"
+  @"                                     O \n"
+  @"\n"
+  @"\n"
+  @"                O                    X \n"
+  @"                O                    X \n"
+  @"                O        O           X \n"
+  @" X              O        O           X \n"
+  @" X              O  X     O           X \n"
+  @" 24 23 22 21 20 19    18 17 16 15 14 13";
+
+  STAssertEquals([s length], [expected length], nil);
+  NSArray *sLines = [s componentsSeparatedByString:@"\n"];
+  NSArray *eLines = [expected componentsSeparatedByString:@"\n"];
+  STAssertEquals([sLines count], [eLines count], nil);
+  for (int i = 0; i < MIN([sLines count], [eLines count]); ++i) {
+    STAssertEqualObjects(sLines[i], eLines[i], @"Line %d expected: \n\"%@\" was \n\"%@\"", i, eLines[i], sLines[i]);
+  }
+  STAssertEqualObjects(s, expected, nil);
+//  NSLog(@"=============================  exp:\n%@", expected);
+//  NSLog(@"=============================  desc:\n%@", s);
+//  NSLog(@"=============================");
+}
+
+
 @end

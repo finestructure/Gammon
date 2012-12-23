@@ -249,4 +249,57 @@ const NSUInteger kSlotCount = 24;
 }
 
 
+- (NSString *)description
+{
+  NSMutableArray *lines = [NSMutableArray array];
+  [lines addObject:@" 1  2  3  4  5  6     7  8  9  10 11 12"];
+
+  [lines addObjectsFromArray:[self linesTopRow:YES]];
+  [lines addObjectsFromArray:@[@"", @""]];
+  [lines addObjectsFromArray:[[[self linesTopRow:NO] reverseObjectEnumerator] allObjects]];
+    
+  [lines addObject:@" 24 23 22 21 20 19    18 17 16 15 14 13"];
+  return [lines componentsJoinedByString:@"\n"];
+}
+
+
+- (NSArray *)linesTopRow:(BOOL)topRow
+{  
+  NSMutableArray *lines = [NSMutableArray array];
+  BOOL done = NO;
+  NSUInteger row = 1;
+  while (! done) {
+    NSMutableString *line = [NSMutableString stringWithString:@""];
+    BOOL stackFound = NO;
+    for (int i = 1; i <= 12; ++i) {
+      if (i == 7) {
+        // add bar
+        Slot *bar = topRow ? self.whiteBar : self.blackBar;
+        NSString *symbol = @" ";
+        if (bar.count >= row) {
+          symbol = (bar.color == White ? @"O" : @"X");
+        }
+        [line appendString:[NSString stringWithFormat:@" %@ ", symbol]];
+      }
+      NSUInteger index = topRow ? i : 25 - i;
+      
+      Slot *s = self.slots[index];
+      NSString *symbol = @" ";
+      if (s.count >= row) {
+        symbol = (s.color == White ? @"O" : @"X");
+        stackFound = YES;
+      }
+      [line appendString:[NSString stringWithFormat:@" %@ ", symbol]];
+    }
+    if (stackFound) {
+      [lines addObject:line];
+    } else {
+      done = YES;
+    }
+    ++row;
+  }
+  return lines;
+}
+
+
 @end
