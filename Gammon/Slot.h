@@ -22,4 +22,6 @@ typedef enum CheckerColor {
 @property (assign) CheckerColor color;
 @property (assign) NSUInteger count;
 
+- (id)initWithColor:(CheckerColor)color;
+
 @end

@@ -73,7 +73,7 @@ const NSUInteger kSlotCount = 24;
   self.slots = slots;
   
   // Set up bar slots, we need a white and a black one
-  self.bar = @{@(White) : [[Slot alloc] init], @(Black) : [[Slot alloc] init]};
+  self.bar = @{@(White) : [[Slot alloc] initWithColor:White], @(Black) : [[Slot alloc] initWithColor:Black]};
   
   self.state = Ended;
   
@@ -114,6 +114,7 @@ const NSUInteger kSlotCount = 24;
 - (BOOL)moveFrom:(NSUInteger)from by:(NSUInteger)by
 {
   NSLog(@"moving from %d by %d", from, by);
+  NSAssert((from >= 1 && from <= 24), @"from must be within [1, 24], was: %d", from);
 
   if (! [self movesLeft]) {
     NSLog(@"no more moves!");
@@ -138,9 +139,11 @@ const NSUInteger kSlotCount = 24;
   Slot *origin = [self.slots objectAtIndex:from];
   Slot *dest;
   if (self.state == WhitesTurn) {
+    NSAssert((from + by >= 1 && from + by <= 24), @"from + by must be within [1, 24], was: %d", from + by);
     dest = [self.slots objectAtIndex:from + by];
   } else {
     // black moves counter clockwise
+    NSAssert((from - by >= 1 && from - by <= 24), @"from - by must be within [1, 24], was: %d", from - by);
     dest = [self.slots objectAtIndex:from - by];
   }
   

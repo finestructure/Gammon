@@ -112,38 +112,60 @@ const CGFloat kPipHeight = 120;
 
 - (void)drawCheckers:(CGContextRef)context boardSize:(CGSize)boardSize pipWidth:(CGFloat)pipWidth
 {
-  if (self.game) {
+  if (self.game == nil) {
+    return;
+  }
+  
+  { // draw checkers on regular slots
     for (Slot *s in self.game.slots) {
-      if (s.count > 0) {
-        NSUInteger index = [self.game.slots indexOfObject:s];
-        UIColor *color = s.color == White ? [UIColor whiteColor] : [UIColor blackColor];
-        CGFloat xOffset;
-        NSUInteger x;
-        BOOL down;
-        if (index <= 6) {
-          xOffset = 0;
-          x = index -1;
-          down = YES;
-        } else if (index <= 12) {
-          xOffset = kBarWidth;
-          x = index -1;
-          down = YES;
-        } else if (index <= 18) {
-          xOffset = kBarWidth;
-          x = kTotalPipCount - index;
-          down = NO;
-        } else {
-          xOffset = 0;
-          x = kTotalPipCount - index;
-          down = NO;
-        }
-        for (int y = 0; y < s.count; ++y) {
-          CGFloat yPos = down ? y*kCheckerRadius : boardSize.height - (y +1)*kCheckerRadius;
-          CGRect rect = CGRectMake(x*pipWidth + xOffset + (pipWidth-kCheckerRadius)/2, yPos, kCheckerRadius, kCheckerRadius);
-          drawChecker(context, rect, color.CGColor);
-        }
+      if (s.count == 0) {
+        continue;
       }
+      
+      NSUInteger index = [self.game.slots indexOfObject:s];
+      UIColor *color = s.color == White ? [UIColor whiteColor] : [UIColor blackColor];
+      CGFloat xOffset;
+      NSUInteger x;
+      BOOL down;
+      if (index <= 6) {
+        xOffset = 0;
+        x = index -1;
+        down = YES;
+      } else if (index <= 12) {
+        xOffset = kBarWidth;
+        x = index -1;
+        down = YES;
+      } else if (index <= 18) {
+        xOffset = kBarWidth;
+        x = kTotalPipCount - index;
+        down = NO;
+      } else {
+        xOffset = 0;
+        x = kTotalPipCount - index;
+        down = NO;
+      }
+      CGFloat xCenter = x*pipWidth + xOffset + pipWidth/2;
+      [self drawStack:context boardSize:boardSize count:s.count xCenter:xCenter down:down color:color];
     }
+  }
+  
+  { // draw checkers on bar (top: white, bottom: black)
+    [@[self.game.whiteBar, self.game.blackBar] enumerateObjectsUsingBlock:^(Slot *s, NSUInteger idx, BOOL *stop) {
+      CGFloat barCenter = boardSize.width/2;
+      UIColor *color = s.color == White ? [UIColor whiteColor] : [UIColor blackColor];
+      BOOL down = (s.color == White);
+      [self drawStack:context boardSize:boardSize count:s.count xCenter:barCenter down:down color:color];
+    }];
+  }
+}
+
+
+- (void)drawStack:(CGContextRef)context boardSize:(CGSize)boardSize count:(NSUInteger)count xCenter:(CGFloat)xCenter down:(BOOL)down color:(UIColor *)color
+{
+  for (int y = 0; y < count; ++y) {
+    CGFloat yPos = down ? y*kCheckerRadius : boardSize.height - (y+1)*kCheckerRadius;
+    CGRect rect = CGRectMake(xCenter - kCheckerRadius/2, yPos, kCheckerRadius, kCheckerRadius);
+    drawChecker(context, rect, color.CGColor);
   }
 }
 
