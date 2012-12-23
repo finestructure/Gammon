@@ -16,6 +16,7 @@ const NSUInteger kSlotCount = 24;
 @interface Game ()
 
 @property (nonatomic) NSMutableArray *slots;
+@property (nonatomic) NSDictionary *bar;
 @property (assign) GameState state;
 @property (nonatomic) NSArray *roll;
 @property (nonatomic) NSMutableArray *moved;
@@ -38,8 +39,8 @@ const NSUInteger kSlotCount = 24;
 
 - (void)setup
 {
-  // We keep 24 slots and the bar in a single array describing the layout of the complete board.
-  // Slot 0 contains checkers on the bar.
+  // We keep 24 slots in an array describing the layout of the complete board.
+  // Slot 0 is unused, we use a 1-based index to be compatible with typical backgammon move notation
   NSMutableArray *slots = [NSMutableArray arrayWithCapacity:kSlotCount+1];
   for (NSUInteger i = 0; i < kSlotCount+1; ++i) {
     Slot *s = [[Slot alloc] init];
@@ -70,6 +71,10 @@ const NSUInteger kSlotCount = 24;
   }
   
   self.slots = slots;
+  
+  // Set up bar slots, we need a white and a black one
+  self.bar = @{@(White) : [[Slot alloc] init], @(Black) : [[Slot alloc] init]};
+  
   self.state = Ended;
   
   if ([self.delegate respondsToSelector:@selector(boardUpdated)]) {
@@ -145,30 +150,37 @@ const NSUInteger kSlotCount = 24;
     NSLog(@"cannot move opponents checker!");
     return NO;
   }
+  BOOL hit = NO;
   if ((dest.color == White && self.state != WhitesTurn) ||
       (dest.color == Black && self.state != BlacksTurn)) {
     if (dest.count > 1) {
       // dest blocked
       NSLog(@"destination blocked!");
       return NO;
+    } else if (dest.count == 1) {
+      hit = YES;
     }
   }
   
-  // perform valid move
-  origin.count -= 1;
-  dest.count += 1;
-  // update field state
-  if (dest.color == Free) {
-    dest.color = origin.color;
+  if (hit) {
+    // we're hitting a blot, put it on the bar
+    Slot *bar = self.bar[@(dest.color)];
+    bar.count += 1;
+  } else {
+    // perform normal move
+    dest.count += 1;
   }
+  dest.color = origin.color;
+  origin.count -= 1;
   if (origin.count == 0) {
     origin.color = Free;
   }
   
-  NSLog(@"moved from %d to %d", from, from + by);
+  // update dice tracking
   [self.moved addObject:@(by)];
   [self.availableMoves removeObjectAtIndex:index];
   
+  // notify delegate
   if ([self.delegate respondsToSelector:@selector(boardUpdated)]) {
     [self.delegate boardUpdated];
   }
@@ -197,6 +209,18 @@ const NSUInteger kSlotCount = 24;
 - (NSUInteger)randomWithMax:(NSUInteger)maxValue {
   NSUInteger r = arc4random() % (maxValue+1); // [0,maxValue]
   return r;
+}
+
+
+- (Slot *)whiteBar
+{
+  return self.bar[@(White)];
+}
+
+
+- (Slot *)blackBar
+{
+  return self.bar[@(Black)];
 }
 
 

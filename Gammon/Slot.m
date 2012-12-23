@@ -15,7 +15,9 @@
 {
   self = [super init];
   if (self) {
+    self.index = 0;
     self.color = Free;
+    self.count = 0;
   }
   return self;
 }

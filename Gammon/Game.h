@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class Slot;
 
 @protocol GameDelegate <NSObject>
 
@@ -27,6 +28,8 @@ typedef enum GameState {
 
 @property (weak, nonatomic) id<GameDelegate> delegate;
 @property (readonly, nonatomic) NSArray *slots;
+@property (readonly, nonatomic) Slot *whiteBar;
+@property (readonly, nonatomic) Slot *blackBar;
 @property (readonly, assign) GameState state;
 @property (readonly, nonatomic) NSArray *roll;
 @property (nonatomic) NSMutableArray *availableMoves;

@@ -78,6 +78,49 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
 }
 
 
+- (void)test_basic_move
+{
+  
+}
+
+
+// https://github.com/sas71/Gammon/issues/1 Fix hitting a blot
+- (void)test_issue_01
+{
+  game.fixedRoll = @[@2, @1];
+  [game restart];
+  
+  STAssertEqualObjects(game.roll, (@[@2, @1]), nil);
+  STAssertEquals(game.state, WhitesTurn, nil);
+  STAssertTrue([game moveFrom:1 by:2], nil);
+  STAssertTrue([game moveFrom:3 by:1], nil);
+  
+  STAssertEquals(game.whiteBar.count, 0u, nil);
+  STAssertEquals(game.blackBar.count, 0u, nil);
+  AssertSlot(1, White, 1);
+  AssertSlot(2, Free, 0);
+  AssertSlot(3, Free, 0);
+  AssertSlot(4, White, 1);
+  AssertSlot(5, Free, 0);
+  AssertSlot(6, Black, 5);
+
+  game.fixedRoll = @[@2, @1];
+  [game next];
+
+  STAssertTrue([game moveFrom:6 by:2], nil);
+
+  STAssertEquals(game.whiteBar.count, 1u, nil);
+  STAssertEquals(game.blackBar.count, 0u, nil);
+  AssertSlot(1, White, 1);
+  AssertSlot(2, Free, 0);
+  AssertSlot(3, Free, 0);
+  AssertSlot(4, Black, 1);
+  AssertSlot(5, Free, 0);
+  AssertSlot(6, Black, 4);
+}
+
+
+// https://github.com/sas71/Gammon/issues/2 Two step moves don't clear intermediate field
 - (void)test_issue_02
 {
   game.fixedRoll = @[@1, @1];
@@ -85,24 +128,10 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
   
   STAssertEqualObjects(game.roll, (@[@1, @1]), nil);
   STAssertEquals(game.state, WhitesTurn, nil);
-  BOOL moved = [game moveFrom:1 by:1];
-  STAssertTrue(moved, nil);
-  
-  AssertSlot(1, White, 1);
-  AssertSlot(2, White, 1);
-  AssertSlot(3, Free, 0);
- 
-  moved = [game moveFrom:2 by:1];
-  STAssertTrue(moved, nil);
-
-  AssertSlot(1, White, 1);
-  AssertSlot(2, Free, 0);
-  AssertSlot(3, White, 1);
-
-  moved = [game moveFrom:3 by:1];
-  STAssertTrue(moved, nil);
-  moved = [game moveFrom:4 by:1];
-  STAssertTrue(moved, nil);
+  STAssertTrue([game moveFrom:1 by:1], nil);
+  STAssertTrue([game moveFrom:2 by:1], nil);
+  STAssertTrue([game moveFrom:3 by:1], nil);
+  STAssertTrue([game moveFrom:4 by:1], nil);
   
   AssertSlot(1, White, 1);
   AssertSlot(2, Free, 0);
@@ -113,12 +142,11 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
   
   game.fixedRoll = @[@2, @1];
   [game next];
+  
   STAssertEqualObjects(game.roll, (@[@2, @1]), nil);
   STAssertEquals(game.state, BlacksTurn, nil);
-  moved = [game moveFrom:6 by:2];
-  STAssertTrue(moved, nil);
-  moved = [game moveFrom:4 by:1];
-  STAssertTrue(moved, nil);
+  STAssertTrue([game moveFrom:6 by:2], nil);
+  STAssertTrue([game moveFrom:4 by:1], nil);
 
   AssertSlot(1, White, 1);
   AssertSlot(2, Free, 0);
