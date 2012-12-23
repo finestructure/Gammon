@@ -156,4 +156,52 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
   AssertSlot(6, Black, 4);
 }
 
+
+// https://github.com/sas71/Gammon/issues/4 Implement moving in from bar
+- (void)test_issue_03 {
+  game.fixedRoll = @[@2, @1];
+  [game restart];
+  
+  STAssertEquals(game.state, WhitesTurn, nil);
+  STAssertTrue([game moveFrom:1 by:2], nil);
+  STAssertTrue([game moveFrom:3 by:1], nil);
+
+  game.fixedRoll = @[@2, @1];
+  [game next];
+  
+  STAssertEquals(game.state, BlacksTurn, nil);
+  STAssertTrue([game moveFrom:6 by:2], nil);
+  STAssertTrue([game moveFrom:4 by:1], nil);
+  
+  STAssertEquals(game.whiteBar.count, 1u, nil);
+  STAssertEquals(game.blackBar.count, 0u, nil);
+  AssertSlot(1, White, 1);
+  AssertSlot(2, Free, 0);
+  AssertSlot(3, Black, 1);
+  AssertSlot(4, Free, 0);
+  AssertSlot(5, Free, 0);
+  AssertSlot(6, Black, 4);
+
+  // make sure white must move in from the bar
+  game.fixedRoll = @[@4, @1];
+  [game next];
+  
+  STAssertEquals(game.state, WhitesTurn, nil);
+  for (int i = 1; i <= 24; ++i) {
+    STAssertFalse([game moveFrom:i by:4], @"must not be able to move from %d by 4", i);
+    STAssertFalse([game moveFrom:i by:1], @"must not be able to move from %d by 1", i);
+  }
+  STAssertTrue([game moveFrom:0 by:1], nil);
+
+  STAssertEquals(game.whiteBar.count, 0u, nil);
+  STAssertEquals(game.blackBar.count, 0u, nil);
+  AssertSlot(1, White, 2);
+  AssertSlot(2, Free, 0);
+  AssertSlot(3, Black, 1);
+  AssertSlot(4, Free, 0);
+  AssertSlot(5, Free, 0);
+  AssertSlot(6, Black, 4);
+}
+
+
 @end

@@ -114,7 +114,7 @@ const NSUInteger kSlotCount = 24;
 - (BOOL)moveFrom:(NSUInteger)from by:(NSUInteger)by
 {
   NSLog(@"moving from %d by %d", from, by);
-  NSAssert((from >= 1 && from <= 24), @"from must be within [1, 24], was: %d", from);
+  NSAssert((from >= 0 && from <= 24), @"from must be within [0, 24], was: %d", from);
 
   if (! [self movesLeft]) {
     NSLog(@"no more moves!");
@@ -135,16 +135,38 @@ const NSUInteger kSlotCount = 24;
     return NO;
   }
   
+  {
+    Slot *bar = (self.state == WhitesTurn) ? self.whiteBar : self.blackBar;
+    if (bar.count > 0 && from != 0) {
+      NSLog(@"must move in from the bar first");
+      return NO;
+    }
+  }
+  
   // check if move is valid
-  Slot *origin = [self.slots objectAtIndex:from];
+  Slot *origin;
   Slot *dest;
-  if (self.state == WhitesTurn) {
-    NSAssert((from + by >= 1 && from + by <= 24), @"from + by must be within [1, 24], was: %d", from + by);
-    dest = [self.slots objectAtIndex:from + by];
+  if (from == 0) {
+    // moving in from the bar
+    if (self.state == WhitesTurn) {
+      NSAssert((by >= 1 && by <= 6), @"dest index must be within [1, 6] when moving in white from the bar, was: %d", by);
+      origin = self.whiteBar;
+      dest = [self.slots objectAtIndex:by];
+    } else {
+      NSAssert((by >= 19 && by <= 24), @"dest index must be within [19, 24] when moving in black from the bar, was: %d", 25 - by);
+      origin = self.blackBar;
+      dest = [self.slots objectAtIndex:25 - by];
+    }
   } else {
-    // black moves counter clockwise
-    NSAssert((from - by >= 1 && from - by <= 24), @"from - by must be within [1, 24], was: %d", from - by);
-    dest = [self.slots objectAtIndex:from - by];
+    origin = [self.slots objectAtIndex:from];
+    if (self.state == WhitesTurn) {
+      NSAssert((from + by >= 1 && from + by <= 24), @"from + by must be within [1, 24], was: %d", from + by);
+      dest = [self.slots objectAtIndex:from + by];
+    } else {
+      // black moves counter clockwise
+      NSAssert((from - by >= 1 && from - by <= 24), @"from - by must be within [1, 24], was: %d", from - by);
+      dest = [self.slots objectAtIndex:from - by];
+    }
   }
   
   if ((self.state == WhitesTurn && origin.color != White) ||
@@ -175,7 +197,7 @@ const NSUInteger kSlotCount = 24;
   }
   dest.color = origin.color;
   origin.count -= 1;
-  if (origin.count == 0) {
+  if (origin.count == 0 && from != 0) { // don't reset color on bar slots
     origin.color = Free;
   }
   
