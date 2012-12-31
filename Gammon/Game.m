@@ -259,6 +259,12 @@ const NSUInteger kSlotCount = 24;
   [lines addObjectsFromArray:[[[self linesTopRow:NO] reverseObjectEnumerator] allObjects]];
     
   [lines addObject:@" 24 23 22 21 20 19    18 17 16 15 14 13"];
+  
+  NSDictionary *stateDesc = @{@(Ended): @"--", @(WhitesTurn) : @"White", @(BlacksTurn) : @"Black"};
+  [lines addObject:[NSString stringWithFormat:@"Turn: %@", stateDesc[@(self.state)]]];
+  [lines addObject:[NSString stringWithFormat:@"Roll: %@", self.roll]];
+  [lines addObject:[NSString stringWithFormat:@"Left: %@", self.availableMoves]];
+  
   return [lines componentsJoinedByString:@"\n"];
 }
 

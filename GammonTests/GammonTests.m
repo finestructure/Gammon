@@ -221,7 +221,10 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
   @"                O        O           X \n"
   @" X              O        O           X \n"
   @" X              O        O           X \n"
-  @" 24 23 22 21 20 19    18 17 16 15 14 13";
+  @" 24 23 22 21 20 19    18 17 16 15 14 13\n"
+  @"Turn: --\n"
+  @"Roll: (null)\n"
+  @"Left: (null)";
 
   STAssertEquals([s length], [expected length], nil);
   NSArray *sLines = [s componentsSeparatedByString:@"\n"];
@@ -283,7 +286,15 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
   @"                O        O           X \n"
   @" X              O        O           X \n"
   @" X              O  X     O           X \n"
-  @" 24 23 22 21 20 19    18 17 16 15 14 13";
+  @" 24 23 22 21 20 19    18 17 16 15 14 13\n"
+  @"Turn: White\n"
+  @"Roll: (\n"
+  @"    4,\n"
+  @"    3\n"
+  @")\n"
+  @"Left: (\n"
+  @"    3\n"
+  @")";
 
   STAssertEquals([s length], [expected length], nil);
   NSArray *sLines = [s componentsSeparatedByString:@"\n"];
