@@ -66,17 +66,16 @@
 
 
 - (IBAction)die1Pressed:(id)sender {
-  [self.game next];
+  if (! self.game.movesLeft) {
+    [self.game next];
+  }
 }
 
 
 - (IBAction)die2Pressed:(id)sender {
-  [self.game next];
-}
-
-
-- (IBAction)rollPressed:(id)sender {
-  [self.game next];
+  if (! self.game.movesLeft) {
+    [self.game next];
+  }
 }
 
 
