@@ -18,9 +18,11 @@
 @property (weak, nonatomic) IBOutlet MyButton *die1;
 @property (weak, nonatomic) IBOutlet MyButton *die2;
 @property (weak, nonatomic) IBOutlet MyButton *startButton;
+@property (weak, nonatomic) IBOutlet MyButton *undoButton;
 
 - (IBAction)startPressed:(id)sender;
 - (IBAction)die1Pressed:(id)sender;
 - (IBAction)die2Pressed:(id)sender;
+- (IBAction)undoTapped:(id)sender;
 
 @end

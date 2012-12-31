@@ -21,6 +21,8 @@ const NSUInteger kSlotCount = 24;
 @property (nonatomic) NSArray *roll;
 @property (nonatomic) NSMutableArray *moved;
 
+@property (nonatomic) NSUndoManager *undoManager;
+
 @end
 
 
@@ -39,6 +41,8 @@ const NSUInteger kSlotCount = 24;
 
 - (void)setup
 {
+  self.undoManager = [[NSUndoManager alloc] init];
+  
   // We keep 24 slots in an array describing the layout of the complete board.
   // Slot 0 is unused, we use a 1-based index to be compatible with typical backgammon move notation
   NSMutableArray *slots = [NSMutableArray arrayWithCapacity:kSlotCount+1];
@@ -93,6 +97,7 @@ const NSUInteger kSlotCount = 24;
 - (void)next
 {
   self.roll = [self rollDice];
+  [self.undoManager removeAllActions]; // don't allow undo after new roll
   self.moved = [NSMutableArray array];
   self.availableMoves = [NSMutableArray array];
   if ([self.roll[0] isEqualToNumber:self.roll[1]]) {
@@ -119,8 +124,23 @@ const NSUInteger kSlotCount = 24;
 }
 
 
+- (void)undo
+{
+  [self.undoManager undo];
+  
+  // notify delegate
+  if ([self.delegate respondsToSelector:@selector(boardUpdated)]) {
+    [self.delegate boardUpdated];
+  }
+  
+  NSLog(@"\n%@", self);
+}
+
+
 - (BOOL)moveFrom:(NSUInteger)from by:(NSUInteger)by
 {
+  [self.undoManager beginUndoGrouping];
+  
   NSLog(@"moving from %d by %d", from, by);
   NSAssert((from >= 0 && from <= 24), @"from must be within [0, 24], was: %d", from);
 
@@ -198,19 +218,26 @@ const NSUInteger kSlotCount = 24;
   if (hit) {
     // we're hitting a blot, put it on the bar
     Slot *bar = self.bar[@(dest.color)];
+    [[self.undoManager prepareWithInvocationTarget:bar] setCount:bar.count];
     bar.count += 1;
   } else {
     // perform normal move
+    [[self.undoManager prepareWithInvocationTarget:dest] setCount:dest.count];
     dest.count += 1;
   }
+  [[self.undoManager prepareWithInvocationTarget:dest] setColorObject:@(dest.color)];
   dest.color = origin.color;
+  [[self.undoManager prepareWithInvocationTarget:origin] setCount:origin.count];
   origin.count -= 1;
   if (origin.count == 0 && from != 0) { // don't reset color on bar slots
+    [[self.undoManager prepareWithInvocationTarget:origin] setColorObject:@(origin.color)];
     origin.color = Free;
   }
   
   // update dice tracking
+  [[self.undoManager prepareWithInvocationTarget:self.moved] removeLastObject];
   [self.moved addObject:@(by)];
+  [[self.undoManager prepareWithInvocationTarget:self.availableMoves] insertObject:[self.availableMoves objectAtIndex:index] atIndex:index];
   [self.availableMoves removeObjectAtIndex:index];
   
   // notify delegate
@@ -219,6 +246,8 @@ const NSUInteger kSlotCount = 24;
   }
   
   NSLog(@"\n%@", self);
+  
+  [self.undoManager endUndoGrouping];
   
   return YES;
 }

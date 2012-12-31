@@ -29,6 +29,15 @@
 }
 
 
+- (void)setColorObject:(NSNumber *)color
+{
+  NSUInteger value = [color unsignedIntegerValue];
+  if (value >= First && value <= Last ) {
+    self.color = value;
+  }
+}
+
+
 - (NSString *)description
 {
   return [NSString stringWithFormat:@"Slot %d, %@ (%d)", self.index, (self.color == Free ? @"Free" : (self.color == White ? @"White" : @"Black")), self.count];

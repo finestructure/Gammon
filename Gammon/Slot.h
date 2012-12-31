@@ -12,7 +12,10 @@
 typedef enum CheckerColor {
   Free = 0,
   Black,
-  White
+  White,
+  // keep track or range
+  First = Free,
+  Last = White
 } CheckerColor;
 
 
@@ -23,5 +26,8 @@ typedef enum CheckerColor {
 @property (assign) NSUInteger count;
 
 - (id)initWithColor:(CheckerColor)color;
+
+// convenience method to support undo manager
+- (void)setColorObject:(NSNumber *)color;
 
 @end

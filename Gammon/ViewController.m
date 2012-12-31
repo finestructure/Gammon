@@ -85,6 +85,11 @@
 }
 
 
+- (IBAction)undoTapped:(id)sender {
+  [self.game undo];
+}
+
+
 #pragma mark - BoardDelegate
 
 
