@@ -210,6 +210,8 @@ const NSUInteger kSlotCount = 24;
     [self.delegate boardUpdated];
   }
   
+  NSLog(@"\n%@", self);
+  
   return YES;
 }
 

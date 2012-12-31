@@ -106,10 +106,9 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-  NSLog(@"change: %@ %@", keyPath, change);
   if (object == self.game && [keyPath isEqualToString:@"state"]) {
+    NSLog(@"\n%@", self.game);
     NSArray *roll = self.game.roll;
-    NSLog(@"roll: %@", roll);
     [self.die1 setTitle:[roll[0] stringValue] forState:UIControlStateNormal];
     [self.die2 setTitle:[roll[1] stringValue] forState:UIControlStateNormal];
     switch (self.game.state) {
