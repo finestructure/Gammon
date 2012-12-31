@@ -36,6 +36,7 @@ typedef enum GameState {
 
 - (void)restart;
 - (void)next;
+- (void)swapDice;
 
 - (BOOL)moveFrom:(NSUInteger)from by:(NSUInteger)by;
 - (BOOL)movesLeft;

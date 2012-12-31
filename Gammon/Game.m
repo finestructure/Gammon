@@ -96,6 +96,7 @@ const NSUInteger kSlotCount = 24;
   self.moved = [NSMutableArray array];
   self.availableMoves = [NSMutableArray array];
   if ([self.roll[0] isEqualToNumber:self.roll[1]]) {
+    // add four values in case of a double
     for (int i = 0; i < 4; ++i) {
       [self.availableMoves addObject:self.roll[0]];
     }
@@ -108,6 +109,13 @@ const NSUInteger kSlotCount = 24;
   } else {
     self.state = (self.state == WhitesTurn) ? BlacksTurn : WhitesTurn;
   }
+}
+
+
+- (void)swapDice
+{
+  self.roll = @[self.roll[1], self.roll[0]];
+  self.availableMoves = [[[self.availableMoves reverseObjectEnumerator] allObjects] mutableCopy];
 }
 
 
@@ -227,8 +235,8 @@ const NSUInteger kSlotCount = 24;
   NSUInteger r1 = [self randomWithMax:5] +1;
   NSUInteger r2 = [self randomWithMax:5] +1;
   return @[
-    @(r1 > r2 ? r1 : r2),
-    @(r1 < r2 ? r1 : r2)
+    @(MAX(r1, r2)),
+    @(MIN(r1, r2))
   ];
 }
 

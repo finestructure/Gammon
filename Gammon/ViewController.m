@@ -66,14 +66,20 @@
 
 
 - (IBAction)die1Pressed:(id)sender {
-  if (! self.game.movesLeft) {
+  if (self.game.movesLeft) {
+    [self.game swapDice];
+    [self setDice:self.game.roll];
+  } else {
     [self.game next];
   }
 }
 
 
 - (IBAction)die2Pressed:(id)sender {
-  if (! self.game.movesLeft) {
+  if (self.game.movesLeft) {
+    [self.game swapDice];
+    [self setDice:self.game.roll];
+  } else {
     [self.game next];
   }
 }
@@ -100,6 +106,18 @@
 }
 
 
+#pragma mark - Helpers
+
+
+- (void)setDice:(NSArray *)roll
+{
+  [self.die1 setTitle:[roll[0] stringValue] forState:UIControlStateNormal];
+  [self.die2 setTitle:[roll[1] stringValue] forState:UIControlStateNormal];
+  [self.die1 setNeedsDisplay];
+  [self.die2 setNeedsDisplay];
+}
+
+
 #pragma mark - KVO
 
 
@@ -107,9 +125,7 @@
 {
   if (object == self.game && [keyPath isEqualToString:@"state"]) {
     NSLog(@"\n%@", self.game);
-    NSArray *roll = self.game.roll;
-    [self.die1 setTitle:[roll[0] stringValue] forState:UIControlStateNormal];
-    [self.die2 setTitle:[roll[1] stringValue] forState:UIControlStateNormal];
+    [self setDice:self.game.roll];
     switch (self.game.state) {
       case Ended:
         self.die1.hidden = YES;
