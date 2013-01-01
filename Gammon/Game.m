@@ -177,23 +177,27 @@ const NSUInteger kSlotCount = 24;
   if (from == 0) {
     // moving in from the bar
     if (self.state == WhitesTurn) {
-      NSAssert((by >= 1 && by <= 6), @"dest index must be within [1, 6] when moving in white from the bar, was: %d", by);
+      NSUInteger destIndex = by;
+      NSAssert((destIndex >= 1 && destIndex <= 6), @"dest index must be within [1, 6] when moving in white from the bar, was: %d", destIndex);
       origin = self.whiteBar;
-      dest = [self.slots objectAtIndex:by];
+      dest = [self.slots objectAtIndex:destIndex];
     } else {
-      NSAssert((by >= 19 && by <= 24), @"dest index must be within [19, 24] when moving in black from the bar, was: %d", 25 - by);
+      NSUInteger destIndex = 25 - by;
+      NSAssert((destIndex >= 19 && destIndex <= 24), @"dest index must be within [19, 24] when moving in black from the bar, was: %d", destIndex);
       origin = self.blackBar;
-      dest = [self.slots objectAtIndex:25 - by];
+      dest = [self.slots objectAtIndex:destIndex];
     }
   } else {
     origin = [self.slots objectAtIndex:from];
     if (self.state == WhitesTurn) {
-      NSAssert((from + by >= 1 && from + by <= 24), @"from + by must be within [1, 24], was: %d", from + by);
-      dest = [self.slots objectAtIndex:from + by];
+      NSUInteger destIndex = from + by;
+      NSAssert((destIndex >= 1 && destIndex <= 24), @"from + by must be within [1, 24], was: %d", destIndex);
+      dest = [self.slots objectAtIndex:destIndex];
     } else {
       // black moves counter clockwise
-      NSAssert((from - by >= 1 && from - by <= 24), @"from - by must be within [1, 24], was: %d", from - by);
-      dest = [self.slots objectAtIndex:from - by];
+      NSUInteger destIndex = from - by;
+      NSAssert((destIndex >= 1 && destIndex <= 24), @"from - by must be within [1, 24], was: %d", destIndex);
+      dest = [self.slots objectAtIndex:destIndex];
     }
   }
   

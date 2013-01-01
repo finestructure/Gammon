@@ -158,7 +158,8 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
 
 
 // https://github.com/sas71/Gammon/issues/4 Implement moving in from bar
-- (void)test_issue_03 {
+- (void)test_issue_03
+{
   game.fixedRoll = @[@2, @1];
   [game restart];
   
@@ -203,6 +204,37 @@ STAssertEquals(s.count, (NSUInteger)_count, @"slot %d count shoud be %d (actual:
   AssertSlot(6, Black, 4);
 }
 
+
+// https://github.com/sas71/Gammon/issues/9 Assertion fails for blocked move
+- (void)test_issue_09
+{
+  game.fixedRoll = @[@1, @1];
+  [game restart];
+
+  STAssertTrue([game moveFrom:19 by:1], nil);
+  STAssertTrue([game moveFrom:19 by:1], nil);
+  STAssertTrue([game moveFrom:17 by:1], nil);
+  STAssertTrue([game moveFrom:17 by:1], nil);
+
+  game.fixedRoll = @[@3, @1];
+  [game next];
+
+  STAssertTrue([game moveFrom:24 by:3], nil);
+  STAssertTrue([game moveFrom:24 by:1], nil);
+
+  game.fixedRoll = @[@3, @2];
+  [game next];
+
+  STAssertTrue([game moveFrom:18 by:3], nil);
+  STAssertTrue([game moveFrom:19 by:2], nil);
+
+  game.fixedRoll = @[@6, @5];
+  [game next];
+
+  STAssertFalse([game moveFrom:0 by:6], nil);
+
+  NSLog(@"\n%@", game);
+}
 
 - (void)test_gameDescription
 {
