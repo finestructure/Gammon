@@ -1,4 +1,4 @@
-Frank/frankified_build/*
-Frank/libCocoaHTTPServer.a
-Frank/libFrank.a
-Frank/libShelley.a
+Frank/frankified_build/
+Frank/lib*.a
+build/
+xcuserdata
