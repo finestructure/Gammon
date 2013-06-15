@@ -3,34 +3,34 @@
 <plist version="1.0">
 <dict>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>F250EBD3-53E3-49A5-B231-145C1FC2CB80</string>
+	<string>75B9F9A0-4FF4-4C01-8D20-AA11BB557CFA</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Gammon</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>90B32D72-1C7C-4B4B-B647-2EE05B775F84</key>
-		<string>ssh://github.com/sas71/Gammon.git</string>
+		<key>7C8367E6-FFBD-40A0-826F-C0DB09292500</key>
+		<string>https://github.com/sas71/Gammon.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Gammon.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>90B32D72-1C7C-4B4B-B647-2EE05B775F84</key>
+		<key>7C8367E6-FFBD-40A0-826F-C0DB09292500</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/sas71/Gammon.git</string>
+	<string>https://github.com/sas71/Gammon.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>90B32D72-1C7C-4B4B-B647-2EE05B775F84</string>
+	<string>7C8367E6-FFBD-40A0-826F-C0DB09292500</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>90B32D72-1C7C-4B4B-B647-2EE05B775F84</string>
+			<string>7C8367E6-FFBD-40A0-826F-C0DB09292500</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Gammon</string>
 		</dict>
