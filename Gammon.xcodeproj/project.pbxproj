@@ -238,6 +238,11 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Sven A. Schmidt";
+				TargetAttributes = {
+					5AB3E68A166522280057473D = {
+						DevelopmentTeam = 45TWE6N5C2;
+					};
+				};
 			};
 			buildConfigurationList = 5AB3E685166522280057473D /* Build configuration list for PBXProject "Gammon" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -415,6 +420,7 @@
 		5AB3E6C5166522280057473D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gammon/Gammon-Prefix.pch";
 				INFOPLIST_FILE = "Gammon/Gammon-Info.plist";
@@ -434,6 +440,7 @@
 		5AB3E6C6166522280057473D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Gammon/Gammon-Prefix.pch";
 				INFOPLIST_FILE = "Gammon/Gammon-Info.plist";
@@ -446,6 +453,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Gammon.app/Gammon";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sven Schmidt (32V4Y56Y8B)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
@@ -454,6 +462,7 @@
 				GCC_PREFIX_HEADER = "Gammon/Gammon-Prefix.pch";
 				INFOPLIST_FILE = "GammonTests/GammonTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "14C69609-A3BE-48CE-B21A-0D8F6230D498";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -463,6 +472,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Gammon.app/Gammon";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Sven Schmidt (32V4Y56Y8B)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
@@ -471,6 +481,7 @@
 				GCC_PREFIX_HEADER = "Gammon/Gammon-Prefix.pch";
 				INFOPLIST_FILE = "GammonTests/GammonTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "14C69609-A3BE-48CE-B21A-0D8F6230D498";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
